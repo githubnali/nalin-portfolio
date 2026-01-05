@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
 
+import HeroImg from '../assets/hero-image.png';
+
+
 const Hero: React.FC = () => {
   const [typedText, setTypedText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
@@ -56,14 +59,30 @@ const Hero: React.FC = () => {
   };
   
   return (
-    <section id="home" className="lg:min-h-screen flex items-center justify-center relative bg-gray-50 dark:bg-gray-900">
+    <section 
+      id="home" 
+      className="
+      lg:min-h-screen 
+      relative 
+      bg-gray-50 
+      dark:bg-gray-900
+      "
+      style={{
+        backgroundImage: `url(${HeroImg})`,
+        backgroundSize: 'cover',
+        backgroundPositionX: '300px',
+        backgroundPositionY: 'top',
+      }}  
+
+      
+    >
       {/* <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] dark:opacity-[0.05]"></div> */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col justify-center">
-        <div className="lg:ml-10 animate-fadeIn">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:pt-40">
+        <div className="animate-fadeIn">
           <h2 className="text-lg md:text-xl font-medium text-amber-700 dark:text-amber-500 mb-2">
             Hello, I'm
           </h2>
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4">
+          <h1 className="text-4xl md:text-6xl font-bold text-white dark:text-white mb-4">
             Nagaraju Nali
           </h1>
           <div className="h-9 mb-6">
@@ -72,9 +91,8 @@ const Hero: React.FC = () => {
               <span className={`ml-1 inline-block w-1 h-5 bg-amber-700 dark:bg-amber-500 ${isTyping ? 'animate-blink' : ''}`}></span>
             </h2>
           </div>
-          <p className="max-w-2xl text-base md:text-lg text-gray-600 dark:text-gray-400 mb-8">
-            I enjoy developing digital experiences that are both useful and enjoyable, solving real problems with clean and creative solutions.
-          </p>
+          <p className="max-w-2xl text-base md:text-lg text-gray-300 dark:text-gray-400 mb-8">
+            I’m a Frontend Engineer specializing in React, Modern UI architecture, and performance-driven web experiences. I transform complex ideas into scalable, intuitive, and visually powerful applications.          </p>
           <div className="flex flex-wrap gap-4">
             <a 
               href="#projects" 
@@ -86,7 +104,7 @@ const Hero: React.FC = () => {
               href="#contact" 
               className="px-6 py-3 bg-transparent border-2 border-amber-700 text-amber-700 dark:text-amber-600 dark:border-amber-600 hover:bg-indigo-50 dark:hover:bg-gray-800 font-medium rounded-lg transition-colors cursor-pointer"
             >
-              Contact Me
+              Let’s Work Together
             </a>
           </div>
         </div>

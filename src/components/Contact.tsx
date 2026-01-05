@@ -55,7 +55,7 @@ const Contact: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
-            Get In <span className="text-amber-700 dark:text-amber-500">Touch</span>
+            Let’s Build <span className="text-amber-700 dark:text-amber-500">Something Great</span>
           </h2>
           <div className="mt-2 h-1 w-20 bg-amber-700 dark:bg-amber-500 mx-auto"></div>
           <p className="mt-4 max-w-2xl mx-auto text-gray-600 dark:text-gray-400">
@@ -101,7 +101,7 @@ const Contact: React.FC = () => {
                 <div className="ml-4">
                   <h4 className="text-lg font-medium text-gray-900 dark:text-white">Location</h4>
                   <p className="text-gray-600 dark:text-gray-400">
-                    Bangulur, India
+                    Bengaluru,Karnataka, India
                   </p>
                 </div>
               </div>
@@ -231,7 +231,7 @@ const Contact: React.FC = () => {
                 ) : (
                   <span className="flex items-center">
                     <Send size={18} className="mr-2" />
-                    Send Message
+                    Get in Touch
                   </span>
                 )}
               </button>

@@ -33,7 +33,7 @@ const About: React.FC = () => {
               Who am I?
             </h3>
             <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-              With over 3 years of hands-on experience, I build modern, responsive web applications 
+              With over 3+ years of hands-on experience, I build modern, responsive web applications 
               that are fast, scalable, and user-focused. I thrive on transforming complex challenges 
               into clean, efficient code creating digital solutions that are not just functional, but 
               built to last.
@@ -49,7 +49,7 @@ const About: React.FC = () => {
                 <h4 className="font-medium text-gray-900 dark:text-white mb-2">Personal Info</h4>
                 <ul className="space-y-2 text-gray-600 dark:text-gray-300">
                   <li><span className="font-medium">Name:</span> Nagaraju Nali</li>
-                  <li><span className="font-medium">Location:</span> Bengaluru, India</li>
+                  <li><span className="font-medium">Location:</span> Bengaluru, Karnataka, India</li>
                   <li><span className="font-medium">Email:</span> nagarajunnr341@gmail.com</li>
                   <li><span className="font-medium">Experience:</span> 3+ Years</li>
                 </ul>

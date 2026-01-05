@@ -72,7 +72,7 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Get In Touch</h3>
             <ul className="space-y-2 text-gray-400">
-              <li>Bengaluru, India</li>
+              <li>Bengaluru, Karnataka, India</li>
               <li>nagarajunnr341@gmail.com</li>
               <li>+91 9182131863</li>
             </ul>
@@ -81,7 +81,7 @@ const Footer: React.FC = () => {
         
         <div className="flex flex-col sm:flex-row justify-between items-center pt-6">
           <p className="text-gray-400 text-sm">
-            &copy; {currentYear} Nagaraju Nali. All rights reserved.
+            &copy; {currentYear} Nagaraju Nali. All rights reserved -- Designed & Built with Passion for Clean Code and Great UX
           </p>
           <p className="text-gray-400 text-sm mt-2 sm:mt-0 flex items-center">
             Made with <Heart size={14} className="mx-1 text-red-400" /> and React
