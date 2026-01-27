@@ -28,6 +28,7 @@ const Skills: React.FC = () => {
     { name: 'React', level: 49, category: 'frontend', img: Reactjs},
     { name: 'Angular', level: 25, category: 'frontend', img: Angular},
     { name: 'HTML & CSS', level: 70, category: 'frontend', img: Css},
+    { name: 'HTML5', level: 80, category: 'frontend', img: HTML},
     { name: 'TypeScript', level: 10, category: 'frontend', img: Typescript},
     { name: 'Tailwind CSS', level: 75, category: 'frontend', img: Tailwind},
     { name: 'Resp Design', level: 80, category: 'frontend', img: HTML_CSS },
