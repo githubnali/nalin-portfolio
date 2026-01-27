@@ -1,26 +1,40 @@
 import React, { useState } from 'react';
 
+import HTML from '../assets/projects/skills/html.png';
+import JS from '../assets/projects/skills/javascript.png';
+import HTML_CSS from '../assets/projects/skills/html-css.png';
+import Reactjs from '../assets/projects/skills/react.png';
+import Angular from '../assets/projects/skills/angular.png';
+import Nodejs from '../assets/projects/skills/nodejs.png';
+import Typescript from '../assets/projects/skills/typescript.png';
+import Tailwind from '../assets/projects/skills/tailwind.png';
+import Figma from '../assets/projects/skills/figma.png';
+import Github from '../assets/projects/skills/github.png';
+import Express from '../assets/projects/skills/express.png';
+import Css from '../assets/projects/skills/css.png';
+
 interface Skill {
   name: string;
   level: number;
   category: 'frontend' | 'backend' | 'design' | 'other';
+  img: string
 }
 
 const Skills: React.FC = () => {
   const [filter, setFilter] = useState<string>('all');
   
   const skills: Skill[] = [
-    { name: 'JavaScript', level: 65, category: 'frontend' },
-    { name: 'React', level: 49, category: 'frontend' },
-    { name: 'Angular', level: 25, category: 'frontend' },
-    { name: 'HTML & CSS', level: 70, category: 'frontend' },
-    { name: 'TypeScript', level: 10, category: 'frontend' },
-    { name: 'Tailwind CSS', level: 75, category: 'frontend' },
-    { name: 'Responsive Design', level: 80, category: 'frontend' },
-    { name: 'Node.js', level: 30, category: 'backend' },
-    { name: 'Express', level: 10, category: 'backend' },
-    { name: 'Figma', level: 15, category: 'design' },
-    { name: 'Git & GitHub', level: 50, category: 'other' },
+    { name: 'JavaScript', level: 65, category: 'frontend', img: JS },
+    { name: 'React', level: 49, category: 'frontend', img: Reactjs},
+    { name: 'Angular', level: 25, category: 'frontend', img: Angular},
+    { name: 'HTML & CSS', level: 70, category: 'frontend', img: Css},
+    { name: 'TypeScript', level: 10, category: 'frontend', img: Typescript},
+    { name: 'Tailwind CSS', level: 75, category: 'frontend', img: Tailwind},
+    { name: 'Resp Design', level: 80, category: 'frontend', img: HTML_CSS },
+    { name: 'Node.js', level: 30, category: 'backend', img: Nodejs },
+    { name: 'Express', level: 10, category: 'backend', img: Express },
+    { name: 'Figma', level: 15, category: 'design', img: Figma},
+    { name: 'Git & GitHub', level: 50, category: 'other', img: Github },
   ];
   
   const filteredSkills = filter === 'all' 
@@ -56,28 +70,22 @@ const Skills: React.FC = () => {
           </div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {filteredSkills.map((skill) => (
             <div 
               key={skill.name} 
               className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition-transform hover:-translate-y-1 hover:shadow-lg"
             >
-              <div className="flex justify-between items-center mb-3">
+              <div className="flex flex-col items-center mb-3 gap-3">
+                <img src={skill.img} alt={skill.name} className='w-20 h-20' />
+                <div className='flex gap-2'>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  {skill.name}
+                  {skill.name} -
                 </h3>
-                <span className="text-sm font-medium text-amber-700 dark:text-amber-500">
+                <span className="text-xl font-semibold text-amber-700 dark:text-amber-500">
                   {skill.level}%
                 </span>
-              </div>
-              <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                <div 
-                  className="h-full bg-gradient-to-r from-amber-500 to-amber-700 dark:from-amber-400 dark:to-amber-600 rounded-full"
-                  style={{ width: `${skill.level}%`, transition: 'width 1s ease-in-out' }}
-                ></div>
-              </div>
-              <div className="mt-2 text-xs text-gray-500 dark:text-gray-400 capitalize">
-                {skill.category}
+                </div>
               </div>
             </div>
           ))}

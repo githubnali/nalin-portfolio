@@ -4,6 +4,8 @@ import Taskmate from '../assets/projects/taskmate.webp';
 
 import Cinemate from '../assets/projects/cinemate.webp'
 
+import MomsKitchen from '../assets/projects/moms-kitchen.webp';
+
 interface Project {
   id: number;
   title: string;
@@ -19,6 +21,17 @@ const Projects: React.FC = () => {
   const [filter, setFilter] = useState<string>('all');
   
   const projects: Project[] = [
+    {
+      id: 1,
+      title: "Mom's Kitchen Resturant",
+      description: 'A responsive restaurant website built with React and Tailwind CSS, featuring a modern design and user-friendly interface.',
+      image: MomsKitchen,
+      tags: ['React', 'Tailwind CSS',],
+      liveUrl: 'https://moms-kitchen.in/',
+      githubUrl: 'https://github.com/githubnali/moms-kitchen',
+      featured: false
+
+    },
     {
       id: 1,
       title: 'Task Mate',
