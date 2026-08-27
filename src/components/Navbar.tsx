@@ -1,108 +1,124 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Moon, Sun } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { Menu, X, ArrowRight, Sun, Moon } from 'lucide-react';
+import profile from '../assets/profile.webp';
 import { useTheme } from '../contexts/ThemeContext';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  const isHome = location.pathname === '/';
   const { theme, toggleTheme } = useTheme();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Skills', to: isHome ? '#skills' : '/#skills' },
+    { name: 'Projects', to: isHome ? '#projects' : '/#projects' },
+    { name: 'Experience', to: isHome ? '#experience' : '/#experience' },
+    { name: 'Interview Prep', to: '/interview-prep' },
+    { name: 'Testimonials', to: isHome ? '#testimonials' : '/#testimonials' },
   ];
 
+  const contactHref = isHome ? '#contact' : '/#contact';
+
   return (
-    <header 
+    <header
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled 
-          ? 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-md' 
-          : 'bg-transparent'
+        scrolled ? 'bg-bg/90 backdrop-blur-md border-b border-fg/10' : 'bg-transparent'
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex-shrink-0 font-bold text-xl">
-            <a href="#home" className="text-gray-900 dark:text-white">
-              <span className="text-amber-700  dark:text-amber-500">MyPort</span>folio
-            </a>
-          </div>
-          
+      <nav className="max-w-6xl mx-auto px-6 lg:px-12">
+        <div className="flex items-center justify-between h-20">
+          <Link to="/" className="flex items-center gap-2">
+            <img
+              src={profile}
+              alt="Photo of Nagaraju Nali"
+              className="w-8 h-8 rounded-full object-cover"
+            />
+            <span className="font-display font-semibold text-fg">Nagaraju Nali</span>
+          </Link>
+
           {/* Desktop Nav */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-4">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  className="py-2 px-3 text-md font-semibold text-gray-700 hover:text-amber-700 dark:text-gray-300 dark:hover:text-amber-500 transition-colors"
-                >
-                  {link.name}
-                </a>
-              ))}
-              <button
-                onClick={toggleTheme}
-                className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                aria-label="Toggle theme"
+          <div className="hidden md:flex items-center gap-6">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.to}
+                className="text-sm text-fg/70 hover:text-fg transition-colors"
               >
-                {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-              </button>
-            </div>
-          </div>
-          
-          {/* Mobile Nav Toggle */}
-          <div className="flex md:hidden">
+                {link.name}
+              </Link>
+            ))}
             <button
               onClick={toggleTheme}
-              className="mr-2 p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              className="p-2 rounded-full text-fg/70 hover:text-fg hover:bg-fg/10 transition-colors"
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+            <Link
+              to={contactHref}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-fg text-bg text-sm font-medium rounded-full hover:bg-fg/90 transition-colors"
+            >
+              Contact Me
+              <ArrowRight size={16} />
+            </Link>
+          </div>
+
+          {/* Mobile Nav Toggle */}
+          <div className="flex md:hidden items-center gap-1">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-full text-fg/70 hover:text-fg hover:bg-fg/10 transition-colors"
               aria-label="Toggle theme"
             >
               {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
             </button>
             <button
               onClick={toggleMenu}
-              className="p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className="p-2 rounded-full text-fg hover:bg-fg/10 transition-colors"
               aria-expanded={isOpen}
               aria-label="Main menu"
             >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+              {isOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
       </nav>
 
       {/* Mobile Nav Menu */}
-      <div className={`md:hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96' : 'max-h-0 overflow-hidden'}`}>
-        <div className="px-2 pt-2 pb-3 space-y-1 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md">
+      <div
+        className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
+          isOpen ? 'max-h-96' : 'max-h-0'
+        }`}
+      >
+        <div className="px-6 pt-2 pb-6 space-y-1 bg-bg/95 backdrop-blur-md border-b border-fg/10">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.name}
-              href={link.href}
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-amber-500 dark:text-gray-300 dark:hover:text-amber-500 transition-colors"
+              to={link.to}
+              className="block px-3 py-2 rounded-md text-sm text-fg/70 hover:text-fg transition-colors"
               onClick={toggleMenu}
             >
               {link.name}
-            </a>
+            </Link>
           ))}
+          <Link
+            to={contactHref}
+            onClick={toggleMenu}
+            className="mt-2 inline-flex items-center gap-2 px-5 py-2.5 bg-fg text-bg text-sm font-medium rounded-full"
+          >
+            Contact Me
+            <ArrowRight size={16} />
+          </Link>
         </div>
       </div>
     </header>

@@ -1,124 +1,102 @@
-import React, { useState, useEffect } from 'react';
-import { ChevronDown } from 'lucide-react';
+import React from 'react';
+import { ArrowRight, Download } from 'lucide-react';
+
+import SplitHeading from './anim/SplitHeading';
+import FadeIn from './anim/FadeIn';
 
 import HeroImg from '../assets/hero-image.png';
+import resume from '../assets/My_Resume.pdf';
 
+import ReactIcon from '../assets/projects/skills/react.png';
+import AngularIcon from '../assets/projects/skills/angular.png';
+import NodeIcon from '../assets/projects/skills/nodejs.png';
+import JsIcon from '../assets/projects/skills/javascript.png';
+
+const stack = [
+  { name: 'React', icon: ReactIcon },
+  { name: 'Angular', icon: AngularIcon },
+  { name: 'Node.js', icon: NodeIcon },
+  { name: 'JavaScript', icon: JsIcon },
+];
 
 const Hero: React.FC = () => {
-  const [typedText, setTypedText] = useState('');
-  const [isTyping, setIsTyping] = useState(true);
-  
-  const roles = [
-    'Frontend Developer',
-    'ReactJs Enthusiast',
-    'Responsive UI Builder',
-    'Accessibility Learner',
-    'Anular Enthusiast'
-  ];  
-  useEffect(() => {
-    let currentRole = 0;
-    let currentChar = 0;
-    let isDeleting = false;
-    let typingSpeed = 100;
-    let pauseDuration = 1500;
-    
-    const type = () => {
-      const role = roles[currentRole];
-      
-      if (isDeleting) {
-        setTypedText(role.substring(0, currentChar - 1));
-        currentChar--;
-        typingSpeed = 50;
-      } else {
-        setTypedText(role.substring(0, currentChar + 1));
-        currentChar++;
-        typingSpeed = 100;
-      }
-      
-      if (!isDeleting && currentChar === role.length) {
-        isDeleting = true;
-        typingSpeed = pauseDuration;
-      } else if (isDeleting && currentChar === 0) {
-        isDeleting = false;
-        currentRole = (currentRole + 1) % roles.length;
-      }
-      
-      setTimeout(type, typingSpeed);
-    };
-    
-    const typingTimer = setTimeout(type, 1000);
-    
-    return () => clearTimeout(typingTimer);
-  }, []);
-
-  const scrollToNextSection = () => {
-    const aboutSection = document.getElementById('about');
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-  
   return (
-    <section 
-      id="home" 
-      className="
-      lg:min-h-screen 
-      relative 
-      bg-gray-50 
-      dark:bg-gray-900
-      "
-      style={{
-        backgroundImage: `url(${HeroImg})`,
-        backgroundSize: 'cover',
-        backgroundPositionX: '300px',
-        backgroundPositionY: 'top',
-      }}  
+    <section id="home" className="relative pt-32 pb-16 lg:pt-44 lg:pb-24">
+      <div className="max-w-6xl mx-auto px-6 lg:px-12">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <FadeIn immediate y={16} duration={0.6}>
+              <div className="inline-flex items-center gap-2 mb-6 text-sm text-fg/70">
+                <span className="w-2 h-2 rounded-full bg-accent" />
+                Available for work
+              </div>
+            </FadeIn>
 
-      
-    >
-      {/* <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] dark:opacity-[0.05]"></div> */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:pt-40">
-        <div className="animate-fadeIn">
-          <h2 className="text-lg md:text-xl font-medium text-amber-700 dark:text-amber-500 mb-2">
-            Hello, I'm
-          </h2>
-          <h1 className="text-4xl md:text-6xl font-bold text-white dark:text-white mb-4">
-            Nagaraju Nali
-          </h1>
-          <div className="h-9 mb-6">
-            <h2 className="text-lg md:text-2xl font-medium text-gray-700 dark:text-gray-300">
-              I'm a <span className="text-amber-700 dark:text-amber-500">{typedText}</span>
-              <span className={`ml-1 inline-block w-1 h-5 bg-amber-700 dark:bg-amber-500 ${isTyping ? 'animate-blink' : ''}`}></span>
-            </h2>
-          </div>
-          <p className="max-w-2xl text-base md:text-lg text-gray-300 dark:text-gray-400 mb-8">
-            I’m a Frontend Engineer specializing in React, Modern UI architecture, and performance-driven web experiences. I transform complex ideas into scalable, intuitive, and visually powerful applications.          </p>
-          <div className="flex flex-wrap gap-4">
-            <a 
-              href="#projects" 
-              className="px-6 py-3 bg-amber-700 hover:bg-amber-700 dark:bg-amber-600 text-white font-medium rounded-lg shadow-md hover:shadow-lg transition-all transform hover:-translate-y-1 active:translate-y-0"
+            <SplitHeading
+              as="h1"
+              immediate
+              className="font-display font-light text-4xl md:text-5xl lg:text-6xl text-fg leading-tight tracking-tight mb-6"
             >
-              View My Work
-            </a>
-            <a 
-              href="#contact" 
-              className="px-6 py-3 bg-transparent border-2 border-amber-700 text-amber-700 dark:text-amber-600 dark:border-amber-600 hover:bg-indigo-50 dark:hover:bg-gray-800 font-medium rounded-lg transition-colors cursor-pointer"
-            >
-              Let’s Work Together
-            </a>
+              Frontend Engineer.
+            </SplitHeading>
+
+            <FadeIn immediate y={16} delay={0.3} duration={0.6}>
+              <p className="max-w-xl text-fg/60 text-base md:text-lg leading-relaxed mb-8">
+                Hi, I&apos;m Nagaraju Nali, a frontend engineer in India building fast,
+                accessible web experiences. With 3+ years focused on modern JavaScript
+                frameworks and clean, scalable interfaces, I turn complex ideas into
+                functional, user-focused products.
+              </p>
+            </FadeIn>
+
+            <FadeIn immediate y={16} delay={0.45} duration={0.6}>
+              <div className="flex flex-wrap items-center gap-4 mb-10">
+                <a
+                  href="#projects"
+                  className="inline-flex items-center gap-2 px-6 py-3 border border-fg/20 text-fg text-sm font-medium rounded-full hover:bg-fg/10 transition-colors"
+                >
+                  See my works
+                </a>
+                <a
+                  href="#contact"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-fg text-bg text-sm font-medium rounded-full hover:bg-fg/90 transition-colors"
+                >
+                  Contact Me
+                  <ArrowRight size={16} />
+                </a>
+                <a
+                  href={resume}
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm text-fg/60 hover:text-fg transition-colors"
+                >
+                  <Download size={16} />
+                  Resume
+                </a>
+              </div>
+            </FadeIn>
+
+            <FadeIn immediate y={12} delay={0.6} duration={0.5} stagger={0.08} className="flex items-center gap-3">
+              {stack.map((tech) => (
+                <div
+                  key={tech.name}
+                  className="w-10 h-10 rounded-full bg-card border border-fg/10 flex items-center justify-center"
+                  title={tech.name}
+                >
+                  <img src={tech.icon} alt={tech.name} className="w-5 h-5 object-contain" />
+                </div>
+              ))}
+            </FadeIn>
           </div>
+
+          <FadeIn immediate y={24} delay={0.2} duration={0.9} className="relative">
+            <div className="rounded-3xl overflow-hidden bg-card border border-fg/10 aspect-square max-w-sm mx-auto lg:ml-auto">
+              <img src={HeroImg} alt="Photo of Nagaraju Nali" className="w-full h-full object-cover object-top" />
+            </div>
+          </FadeIn>
         </div>
       </div>
-      
-      <button 
-        onClick={scrollToNextSection}
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-gray-400 hover:text-amber-700 dark:text-gray-500 dark:hover:text-amber-500 transition-colors animate-bounce"
-        aria-label="Scroll down"
-      >
-        <ChevronDown size={32} />
-      </button>
-      
-      <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white dark:from-gray-900 to-transparent"></div>
     </section>
   );
 };

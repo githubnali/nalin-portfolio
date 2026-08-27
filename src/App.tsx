@@ -1,34 +1,40 @@
 import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import About from './components/About';
-import Skills from './components/Skills';
-import ExperienceTimeline from './components/Experience';
-import Projects from './components/Projects';
-import Contact from './components/Contact';
 import Footer from './components/Footer';
+import ScrollManager from './components/ScrollManager';
+import Home from './pages/Home';
+import InterviewPrepPage from './pages/InterviewPrepPage';
+import HtmlCourseLayout from './pages/courses/html/HtmlCourseLayout';
+import HtmlTopicPage from './pages/courses/html/HtmlTopicPage';
+import HtmlInterviewQuestionsPage from './pages/courses/html/HtmlInterviewQuestionsPage';
 
 function App() {
-  // Update page title
   React.useEffect(() => {
-    document.title = 'Nagaraju Nali | Portfolio';
+    document.title = 'Nagaraju Nali | Frontend Engineer';
   }, []);
 
   return (
     <ThemeProvider>
-      <div className="min-h-screen flex flex-col">
-        <Navbar />
-        <main className="flex-grow">
-          <Hero />
-          <About />
-          <Skills />
-          <ExperienceTimeline />
-          <Projects />
-          <Contact />
-        </main>
-        <Footer />
-      </div>
+      <BrowserRouter>
+        <ScrollManager />
+        <div className="min-h-screen flex flex-col bg-bg">
+          <Navbar />
+          <main className="flex-grow">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/interview-prep" element={<InterviewPrepPage />} />
+              <Route path="/interview-prep/html" element={<HtmlCourseLayout />}>
+                <Route index element={<Navigate to="introduction" replace />} />
+                <Route path="interview-questions" element={<HtmlInterviewQuestionsPage />} />
+                <Route path=":topicSlug" element={<HtmlTopicPage />} />
+              </Route>
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }

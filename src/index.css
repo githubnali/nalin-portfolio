@@ -3,13 +3,33 @@
 @tailwind utilities;
 
 :root {
-  --scrollbar-thumb: #d1d5db;
-  --scrollbar-track: #f3f4f6;
+  --color-bg: 250 250 249;
+  --color-card: 255 255 255;
+  --color-card2: 245 245 244;
+  --color-fg: 23 23 23;
+  --color-accent: 16 150 90;
+
+  --tok-tag: 3 105 161;
+  --tok-attr: 161 98 7;
+  --tok-string: 4 120 87;
+  --tok-comment: 115 115 115;
+  --tok-punct: 23 23 23;
+  --tok-punct-alpha: 0.4;
 }
 
 .dark {
-  --scrollbar-thumb: #4b5563;
-  --scrollbar-track: #1f2937;
+  --color-bg: 20 20 20;
+  --color-card: 24 24 24;
+  --color-card2: 28 28 28;
+  --color-fg: 255 255 255;
+  --color-accent: 29 191 115;
+
+  --tok-tag: 56 189 248;
+  --tok-attr: 251 191 36;
+  --tok-string: 52 211 153;
+  --tok-comment: 107 114 128;
+  --tok-punct: 255 255 255;
+  --tok-punct-alpha: 0.4;
 }
 
 html {
@@ -18,7 +38,11 @@ html {
 
 body {
   font-family: 'Inter', sans-serif;
-  @apply text-gray-900 dark:text-white bg-white dark:bg-gray-900;
+  @apply text-fg bg-bg transition-colors duration-300;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Manrope', sans-serif;
 }
 
 /* Custom scrollbar */
@@ -27,51 +51,36 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--scrollbar-track);
+  background: rgb(var(--color-card2));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
+  background: rgb(var(--color-fg) / 0.2);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400 dark:bg-gray-500;
+  background: rgb(var(--color-fg) / 0.3);
 }
 
-/* Animations */
-.animate-fadeIn {
-  animation: fadeIn 1s ease-in-out;
+/* Code editor syntax highlighting */
+.tok-tag {
+  color: rgb(var(--tok-tag));
 }
 
-.animate-blink {
-  animation: blink 1s infinite;
+.tok-attr {
+  color: rgb(var(--tok-attr));
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.tok-string {
+  color: rgb(var(--tok-string));
 }
 
-@keyframes blink {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
+.tok-comment {
+  color: rgb(var(--tok-comment));
+  font-style: italic;
 }
 
-/* Background grid pattern */
-.bg-grid-pattern {
-  background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.1) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
-  background-size: 20px 20px;
+.tok-punct {
+  color: rgb(var(--tok-punct) / var(--tok-punct-alpha));
 }
