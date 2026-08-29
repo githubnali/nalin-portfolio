@@ -1,30 +1,75 @@
 import React, { useState } from 'react';
-import { ArrowRight, Mail, Phone, MapPin, Send } from 'lucide-react';
+import { ArrowRight, Mail, Phone, MapPin, Send, AlertCircle, ChevronDown } from 'lucide-react';
 import SplitHeading from './anim/SplitHeading';
 import FadeIn from './anim/FadeIn';
+import { services } from '../data/services';
+
+const MESSAGE_MAX = 1000;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+interface FormFields {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+type FieldErrors = Partial<Record<keyof FormFields, string>>;
+
+const validate = (fields: FormFields): FieldErrors => {
+  const errors: FieldErrors = {};
+
+  if (!fields.name.trim()) errors.name = 'Please enter your name.';
+  else if (fields.name.trim().length < 2) errors.name = 'Name looks too short.';
+
+  if (!fields.email.trim()) errors.email = 'Please enter your email.';
+  else if (!EMAIL_PATTERN.test(fields.email.trim())) errors.email = 'Enter a valid email address.';
+
+  if (!fields.subject.trim()) errors.subject = 'Please select a service.';
+
+  if (!fields.message.trim()) errors.message = 'Please write a message.';
+  else if (fields.message.trim().length < 10) errors.message = 'Tell me a bit more (at least 10 characters).';
+  else if (fields.message.length > MESSAGE_MAX) errors.message = `Keep it under ${MESSAGE_MAX} characters.`;
+
+  return errors;
+};
 
 const Contact: React.FC = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormFields & { company: string }>({
     name: '',
     email: '',
     subject: '',
     message: '',
+    company: '', // honeypot - left empty by real users, hidden from view
   });
 
+  const [touched, setTouched] = useState<Partial<Record<keyof FormFields, boolean>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<null | 'success' | 'error'>(null);
+
+  const errors = validate(formData);
+  const hasErrors = Object.keys(errors).length > 0;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setTouched((prev) => ({ ...prev, [e.target.name]: true }));
+  };
+
+  const fieldError = (field: keyof FormFields) => (touched[field] ? errors[field] : undefined);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setTouched({ name: true, email: true, subject: true, message: true });
+    if (hasErrors) return;
+
     setIsSubmitting(true);
 
     try {
-      const resp = await fetch('https://formspree.io/f/mldbyavz', {
+      const resp = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
@@ -35,7 +80,8 @@ const Contact: React.FC = () => {
 
       if (resp.ok) {
         setSubmitStatus('success');
-        setFormData({ name: '', email: '', subject: '', message: '' });
+        setFormData({ name: '', email: '', subject: '', message: '', company: '' });
+        setTouched({});
       } else {
         setSubmitStatus('error');
       }
@@ -46,6 +92,13 @@ const Contact: React.FC = () => {
       setTimeout(() => setSubmitStatus(null), 5000);
     }
   };
+
+  const inputClass = (field: keyof FormFields) =>
+    `w-full px-4 py-3 rounded-xl border bg-bg text-fg placeholder:text-fg/30 focus:outline-none focus:ring-1 transition-colors ${
+      fieldError(field)
+        ? 'border-red-500/50 focus:ring-red-500/50'
+        : 'border-fg/10 focus:ring-fg/40'
+    }`;
 
   return (
     <section id="contact" className="py-20 lg:py-28 border-t border-fg/10">
@@ -152,7 +205,18 @@ const Contact: React.FC = () => {
           <div className="rounded-2xl bg-card border border-fg/10 p-8">
             <h3 className="font-display text-xl text-fg mb-6">Send Me a Message</h3>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} noValidate className="space-y-5">
+              <input
+                type="text"
+                name="company"
+                value={formData.company}
+                onChange={handleChange}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="absolute left-[-9999px] w-px h-px opacity-0"
+              />
+
               <div>
                 <label htmlFor="name" className="block text-xs text-fg/50 mb-1.5">
                   Your Name
@@ -163,10 +227,19 @@ const Contact: React.FC = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-xl border border-fg/10 bg-bg text-fg placeholder:text-fg/30 focus:outline-none focus:ring-1 focus:ring-fg/40 transition-colors"
+                  onBlur={handleBlur}
+                  autoComplete="name"
+                  aria-invalid={!!fieldError('name')}
+                  aria-describedby={fieldError('name') ? 'name-error' : undefined}
+                  className={inputClass('name')}
                   placeholder="Your name"
                 />
+                {fieldError('name') && (
+                  <p id="name-error" className="flex items-center gap-1.5 text-xs text-red-400 mt-1.5">
+                    <AlertCircle size={12} />
+                    {fieldError('name')}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -179,42 +252,95 @@ const Contact: React.FC = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-xl border border-fg/10 bg-bg text-fg placeholder:text-fg/30 focus:outline-none focus:ring-1 focus:ring-fg/40 transition-colors"
+                  onBlur={handleBlur}
+                  autoComplete="email"
+                  inputMode="email"
+                  aria-invalid={!!fieldError('email')}
+                  aria-describedby={fieldError('email') ? 'email-error' : undefined}
+                  className={inputClass('email')}
                   placeholder="you@example.com"
                 />
+                {fieldError('email') && (
+                  <p id="email-error" className="flex items-center gap-1.5 text-xs text-red-400 mt-1.5">
+                    <AlertCircle size={12} />
+                    {fieldError('email')}
+                  </p>
+                )}
               </div>
 
               <div>
                 <label htmlFor="subject" className="block text-xs text-fg/50 mb-1.5">
-                  Subject
+                  What do you need?
                 </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-xl border border-fg/10 bg-bg text-fg placeholder:text-fg/30 focus:outline-none focus:ring-1 focus:ring-fg/40 transition-colors"
-                  placeholder="Project Inquiry"
-                />
+                <div className="relative">
+                  <select
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    aria-invalid={!!fieldError('subject')}
+                    aria-describedby={fieldError('subject') ? 'subject-error' : undefined}
+                    className={`${inputClass('subject')} appearance-none pr-10 ${
+                      formData.subject ? '' : 'text-fg/30'
+                    }`}
+                  >
+                    <option value="" disabled>
+                      Select a service...
+                    </option>
+                    {services.map((service) => (
+                      <option key={service.slug} value={service.name} className="text-fg">
+                        {service.name}
+                      </option>
+                    ))}
+                    <option value="Other" className="text-fg">
+                      Other / Not sure yet
+                    </option>
+                  </select>
+                  <ChevronDown
+                    size={16}
+                    className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-fg/40"
+                  />
+                </div>
+                {fieldError('subject') && (
+                  <p id="subject-error" className="flex items-center gap-1.5 text-xs text-red-400 mt-1.5">
+                    <AlertCircle size={12} />
+                    {fieldError('subject')}
+                  </p>
+                )}
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-xs text-fg/50 mb-1.5">
-                  Message
-                </label>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label htmlFor="message" className="block text-xs text-fg/50">
+                    Message
+                  </label>
+                  <span
+                    className={`text-[11px] ${
+                      formData.message.length > MESSAGE_MAX ? 'text-red-400' : 'text-fg/30'
+                    }`}
+                  >
+                    {formData.message.length}/{MESSAGE_MAX}
+                  </span>
+                </div>
                 <textarea
                   id="message"
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  required
+                  onBlur={handleBlur}
                   rows={4}
-                  className="w-full px-4 py-3 rounded-xl border border-fg/10 bg-bg text-fg placeholder:text-fg/30 focus:outline-none focus:ring-1 focus:ring-fg/40 resize-none transition-colors"
+                  aria-invalid={!!fieldError('message')}
+                  aria-describedby={fieldError('message') ? 'message-error' : undefined}
+                  className={`${inputClass('message')} resize-none`}
                   placeholder="I'd like to talk about..."
                 />
+                {fieldError('message') && (
+                  <p id="message-error" className="flex items-center gap-1.5 text-xs text-red-400 mt-1.5">
+                    <AlertCircle size={12} />
+                    {fieldError('message')}
+                  </p>
+                )}
               </div>
 
               <button

@@ -11,6 +11,10 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+.vercel
+.netlify
+.playwright-mcp
 
 # Editor directories and files
 .vscode/*
