@@ -5,6 +5,7 @@ import { ArrowLeft, ChevronDown, Search, Link as LinkIcon } from 'lucide-react';
 import SplitHeading from '../../../components/anim/SplitHeading';
 import FadeIn from '../../../components/anim/FadeIn';
 import { htmlInterviewQuestions } from './htmlInterviewQuestions';
+import { highlightHtml } from '../../../lib/highlightHtml';
 
 const categories = Array.from(new Set(htmlInterviewQuestions.map((q) => q.category)));
 const difficulties = ['Beginner', 'Intermediate', 'Advanced'];
@@ -85,8 +86,9 @@ const HtmlInterviewQuestionsPage: React.FC = () => {
       <FadeIn immediate y={12} delay={0.1}>
         <p className="text-fg/60 leading-relaxed mb-8">
           A rapid-fire reference covering the questions most likely to come up in a real interview - organized by
-          topic and difficulty, with explanations that go beyond a one-line definition. Search or filter to find
-          what you need, and share a direct link to any question.
+          topic and difficulty, with explanations that go beyond a one-line definition and a runnable code example
+          for each one, so the concept sticks. Search or filter to find what you need, and share a direct link to
+          any question.
         </p>
       </FadeIn>
 
@@ -192,6 +194,17 @@ const HtmlInterviewQuestionsPage: React.FC = () => {
               <div className={`grid transition-all duration-300 ${isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
                 <div className="overflow-hidden">
                   <p className="px-5 pb-4 text-sm text-fg/60 leading-relaxed">{item.answer}</p>
+                  {item.example && (
+                    <div className="px-5 pb-5">
+                      <p className="text-fg/40 text-xs uppercase tracking-wide mb-2">Example</p>
+                      <pre className="rounded-lg bg-bg border border-fg/10 p-4 overflow-x-auto">
+                        <code
+                          className="text-xs leading-relaxed whitespace-pre font-mono"
+                          dangerouslySetInnerHTML={{ __html: highlightHtml(item.example) }}
+                        />
+                      </pre>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

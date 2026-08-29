@@ -23,8 +23,8 @@ const Navbar: React.FC = () => {
     { name: 'Skills', to: isHome ? '#skills' : '/#skills' },
     { name: 'Projects', to: isHome ? '#projects' : '/#projects' },
     { name: 'Experience', to: isHome ? '#experience' : '/#experience' },
+    { name: 'Services', to: '/services' },
     { name: 'Interview Prep', to: '/interview-prep' },
-    { name: 'Testimonials', to: isHome ? '#testimonials' : '/#testimonials' },
   ];
 
   const contactHref = isHome ? '#contact' : '/#contact';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Check, ListChecks } from 'lucide-react';
+import { ArrowLeft, Check } from 'lucide-react';
 import { htmlTopics } from './htmlTopics';
 import { useProgress, resetProgress } from '../../../lib/progress';
 
@@ -38,7 +38,7 @@ const HtmlCourseLayout: React.FC = () => {
             </option>
           ))}
           <option value="interview-questions" className="bg-card">
-            14. Top 100 Interview Questions
+            100 HTML Interview Questions
           </option>
         </select>
 
@@ -92,14 +92,13 @@ const HtmlCourseLayout: React.FC = () => {
 
               <Link
                 to="/interview-prep/html/interview-questions"
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors mt-2 pt-2 border-t border-fg/10 ${
+                className={`block px-3 py-2 rounded-lg text-sm transition-colors mt-2 pt-2 border-t border-fg/10 ${
                   location.pathname.endsWith('/interview-questions')
                     ? 'bg-fg/10 text-fg'
                     : 'text-fg/50 hover:text-fg hover:bg-fg/5'
                 }`}
               >
-                <ListChecks size={14} className="shrink-0" />
-                <span>14. Top 100 Interview Questions</span>
+                100 HTML Interview Questions
               </Link>
             </nav>
 

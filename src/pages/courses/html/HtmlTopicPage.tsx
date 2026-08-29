@@ -7,11 +7,12 @@ import FadeIn from '../../../components/anim/FadeIn';
 import PracticeTerminal from '../../../components/practice/PracticeTerminal';
 import Quiz from '../../../components/practice/Quiz';
 import { htmlTopics } from './htmlTopics';
-import { markVisited, setQuizResult } from '../../../lib/progress';
+import { markVisited, setQuizResult, useProgress } from '../../../lib/progress';
 
 const HtmlTopicPage: React.FC = () => {
   const { topicSlug } = useParams();
   const index = htmlTopics.findIndex((t) => t.slug === topicSlug);
+  const progress = useProgress();
 
   useEffect(() => {
     if (topicSlug) markVisited(topicSlug);
@@ -26,9 +27,27 @@ const HtmlTopicPage: React.FC = () => {
   const next = htmlTopics[index + 1];
   const isLast = index === htmlTopics.length - 1;
 
+  const completedCount = htmlTopics.filter((t) => progress[t.slug]?.quizCompleted).length;
+  const completePct = Math.round((completedCount / htmlTopics.length) * 100);
+
   return (
     <article key={topic.slug}>
-      <FadeIn immediate y={12} duration={0.5}>
+      <FadeIn immediate y={8} duration={0.5} className="mb-5">
+        <div className="flex items-center justify-between mb-1.5">
+          <span className="text-[11px] text-fg/40">Course progress</span>
+          <span className="text-[11px] text-fg/40">
+            {completedCount}/{htmlTopics.length} chapters &middot; {completePct}%
+          </span>
+        </div>
+        <div className="h-1.5 rounded-full bg-fg/10 overflow-hidden">
+          <div
+            className="h-full bg-accent rounded-full transition-all duration-500"
+            style={{ width: `${completePct}%` }}
+          />
+        </div>
+      </FadeIn>
+
+      <FadeIn immediate y={12} delay={0.05} duration={0.5}>
         <p className="text-xs tracking-widest text-fg/50 uppercase mb-3">
           Chapter {index + 1} of {htmlTopics.length + 1}
         </p>
