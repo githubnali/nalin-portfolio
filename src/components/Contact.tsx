@@ -46,6 +46,7 @@ const Contact: React.FC = () => {
   const [touched, setTouched] = useState<Partial<Record<keyof FormFields, boolean>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<null | 'success' | 'error'>(null);
+  const [errorMessage, setErrorMessage] = useState<string>('Oops! Something went wrong. Please try again later.');
 
   const errors = validate(formData);
   const hasErrors = Object.keys(errors).length > 0;
@@ -83,9 +84,14 @@ const Contact: React.FC = () => {
         setFormData({ name: '', email: '', subject: '', message: '', company: '' });
         setTouched({});
       } else {
+        const data = await resp.json().catch(() => null);
+        setErrorMessage(
+          typeof data?.error === 'string' ? data.error : 'Oops! Something went wrong. Please try again later.'
+        );
         setSubmitStatus('error');
       }
     } catch {
+      setErrorMessage('Oops! Something went wrong. Please try again later.');
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -366,9 +372,7 @@ const Contact: React.FC = () => {
                 </div>
               )}
               {submitStatus === 'error' && (
-                <div className="p-3 rounded-xl bg-red-500/10 text-red-400 text-sm text-center">
-                  Oops! Something went wrong. Please try again later.
-                </div>
+                <div className="p-3 rounded-xl bg-red-500/10 text-red-400 text-sm text-center">{errorMessage}</div>
               )}
             </form>
           </div>
