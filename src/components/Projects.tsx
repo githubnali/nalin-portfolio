@@ -6,6 +6,7 @@ import Taskmate from '../assets/projects/taskmate.webp';
 import Cinemate from '../assets/projects/cinemate.webp';
 import MomsKitchen from '../assets/projects/moms-kitchen.webp';
 import NetflixGPT from '../assets/projects/netflix-gpt.png';
+import BugTracker from '../assets/projects/bug-tracker.png';
 
 interface Project {
   id: number;
@@ -25,6 +26,15 @@ const projects: Project[] = [
     image: NetflixGPT,
     liveUrl: 'https://netflix-gpt-ten-alpha.vercel.app/',
     githubUrl: 'https://github.com/githubnali/Netflix-GPT',
+  },
+  {
+    id: 6,
+    title: 'Bug Tracker',
+    description:
+      'A role-based bug management app for QA and developer teams, with a full Open to Closed workflow, screenshot uploads, comment threads, and dashboard charts.',
+    image: BugTracker,
+    liveUrl: 'https://infraonio-bug-tracker.netlify.app/',
+    githubUrl: 'https://github.com/githubnali/bugs-tracker',
   },
   {
     id: 2,

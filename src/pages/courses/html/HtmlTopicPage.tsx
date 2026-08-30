@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, ListChecks } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ListChecks, Clock } from 'lucide-react';
 
 import SplitHeading from '../../../components/anim/SplitHeading';
 import FadeIn from '../../../components/anim/FadeIn';
@@ -8,6 +8,7 @@ import PracticeTerminal from '../../../components/practice/PracticeTerminal';
 import Quiz from '../../../components/practice/Quiz';
 import { htmlTopics } from './htmlTopics';
 import { markVisited, setQuizResult, useProgress } from '../../../lib/progress';
+import { estimateTopicMinutes } from '../../../lib/estimateTopicTime';
 
 const HtmlTopicPage: React.FC = () => {
   const { topicSlug } = useParams();
@@ -48,9 +49,14 @@ const HtmlTopicPage: React.FC = () => {
       </FadeIn>
 
       <FadeIn immediate y={12} delay={0.05} duration={0.5}>
-        <p className="text-xs tracking-widest text-fg/50 uppercase mb-3">
-          Chapter {index + 1} of {htmlTopics.length + 1}
-        </p>
+        <div className="flex items-center gap-3 mb-3">
+          <p className="text-xs tracking-widest text-fg/50 uppercase">
+            Chapter {index + 1} of {htmlTopics.length + 1}
+          </p>
+          <span className="inline-flex items-center gap-1 text-xs text-fg/40">
+            <Clock size={12} />~{estimateTopicMinutes(topic)} min
+          </span>
+        </div>
       </FadeIn>
 
       <SplitHeading as="h1" immediate className="font-display font-light text-3xl md:text-4xl text-fg mb-6">
