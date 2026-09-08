@@ -1154,4 +1154,178 @@ const request = indexedDB.open('myDB', 1);`,
 <td class="cell">Cell</td>
 <style>.cell { width: 100px; background: yellow; }</style>`,
   },
+
+  // ---------- Additional Advanced Topics ----------
+  {
+    id: 101,
+    category: 'HTML5 Features & APIs',
+    difficulty: 'Intermediate',
+    question: 'What does the native <dialog> element give you, and how do you open it as a modal?',
+    answer:
+      'Calling showModal() on a <dialog> renders it centered above the rest of the page content, traps focus inside it, disables interaction with everything behind it, and lets Escape close it - all without any JavaScript-authored focus trapping or overlay logic. Its ::backdrop pseudo-element lets you style the dimmed background behind the dialog, and calling show() instead of showModal() opens it as a plain non-modal panel that doesn’t block the rest of the page.',
+    example: `<dialog id="confirmDialog">
+  <p>Are you sure?</p>
+  <button onclick="confirmDialog.close()">Close</button>
+</dialog>
+<script>confirmDialog.showModal();</script>
+<style>#confirmDialog::backdrop { background: rgba(0,0,0,0.5); }</style>`,
+  },
+  {
+    id: 102,
+    category: 'HTML5 Features & APIs',
+    difficulty: 'Beginner',
+    question: 'What do <details> and <summary> do, and why use them over a JavaScript accordion?',
+    answer:
+      '<details> creates a native disclosure widget that’s collapsed by default, and its <summary> child becomes the always-visible, clickable label that toggles the rest of the content open and closed. Because the browser implements the toggle behavior itself, you get keyboard accessibility, an open/close state, and a toggle event for free, without writing any JavaScript or ARIA attributes to build an accordion from scratch.',
+    example: `<details>
+  <summary>Show more info</summary>
+  <p>Here's the hidden content that appears when expanded.</p>
+</details>`,
+  },
+  {
+    id: 103,
+    category: 'Forms & Inputs',
+    difficulty: 'Intermediate',
+    question: 'What is the <datalist> element, and how does it differ from a <select> dropdown?',
+    answer:
+      '<datalist> provides a set of suggested values for a text input via the input’s list attribute, showing an autocomplete-style dropdown as the user types - but unlike <select>, the user isn’t restricted to only the listed options and can still type any free-form value. This makes it well suited for things like suggesting common city names while still allowing an unlisted one, rather than forcing a strict enumerated choice.',
+    example: `<input list="browsers" name="browser">
+<datalist id="browsers">
+  <option value="Chrome">
+  <option value="Firefox">
+  <option value="Safari">
+</datalist>`,
+  },
+  {
+    id: 104,
+    category: 'Forms & Inputs',
+    difficulty: 'Intermediate',
+    question: 'What is the <output> element for?',
+    answer:
+      '<output> represents the result of a calculation performed by script, typically driven by other form controls - for example, showing the live sum of two number inputs. Its for attribute can reference the ids of the inputs that contributed to the result, which gives assistive technology a programmatic link between the inputs and the computed value, something a plain <span> wouldn’t convey.',
+    example: `<form oninput="result.value = Number(a.value) + Number(b.value)">
+  <input id="a" type="number" value="0"> +
+  <input id="b" type="number" value="0"> =
+  <output id="result" for="a b">0</output>
+</form>`,
+  },
+  {
+    id: 105,
+    category: 'Forms & Inputs',
+    difficulty: 'Intermediate',
+    question: 'What’s the difference between <progress> and <meter>?',
+    answer:
+      '<progress> represents the completion progress of a task, like a file upload or a multi-step form, and is typically shown as filling up toward completion over time. <meter> represents a scalar value within a known range, like disk usage or a rating, and isn’t about progress toward finishing something - it’s a snapshot measurement, which browsers can even color differently (e.g. red) depending on where the value falls in its range.',
+    example: `<progress value="70" max="100"></progress>
+<meter value="0.6" min="0" max="1" low="0.3" high="0.8" optimum="1"></meter>`,
+  },
+  {
+    id: 106,
+    category: 'Forms & Inputs',
+    difficulty: 'Intermediate',
+    question: 'What do you need to configure on a form to support file uploads, and why?',
+    answer:
+      'Beyond adding <input type="file">, the enclosing <form> must set enctype="multipart/form-data" and method="POST", because the default encoding (application/x-www-form-urlencoded) can only transmit plain text key-value pairs and can’t represent binary file contents. multipart/form-data instead splits the submission into distinct parts, each carrying its own headers, so file bytes and regular fields can be sent together in one request.',
+    example: `<form action="/upload" method="POST" enctype="multipart/form-data">
+  <input type="file" name="avatar" accept="image/*">
+  <button type="submit">Upload</button>
+</form>`,
+  },
+  {
+    id: 107,
+    category: 'Forms & Inputs',
+    difficulty: 'Beginner',
+    question: 'What does the autofocus attribute do, and what’s a downside of overusing it?',
+    answer:
+      'autofocus automatically places keyboard focus on an element as soon as the page (or a dialog) loads, saving the user a click before they can start typing - handy for a search box or a login form’s first field. Overusing it, or applying it to multiple elements, can be jarring or disorienting for screen reader and keyboard users who lose their expected starting point on the page, so it should be used sparingly and only on the one element that truly benefits.',
+    example: `<input type="search" name="q" autofocus placeholder="Search...">`,
+  },
+  {
+    id: 108,
+    category: 'Performance & Best Practices',
+    difficulty: 'Advanced',
+    question: 'What is Subresource Integrity, and how do integrity and crossorigin work together on a <script> or <link> tag?',
+    answer:
+      'Subresource Integrity lets you specify a cryptographic hash of the exact file you expect to load via the integrity attribute, so the browser refuses to execute or apply the resource if a CDN is compromised and serves tampered content. Because verifying that hash requires reading the response body, the fetch must also be CORS-enabled via crossorigin, or the browser can’t access the bytes needed to check integrity in the first place.',
+    example: `<script src="https://cdn.example.com/lib.js"
+  integrity="sha384-oqVuAfXRKap7fdgcCY5uykM6+R9GqQ8K/uxy9rx7HNQlGYl1kPzQho1wx4JwY8wC"
+  crossorigin="anonymous"></script>`,
+  },
+  {
+    id: 109,
+    category: 'Performance & Best Practices',
+    difficulty: 'Advanced',
+    question: 'How does <script type="module"> differ from a classic script?',
+    answer:
+      'Module scripts are deferred by default (executing after parsing, in document order, without needing the defer attribute), run in strict mode automatically, get their own top-level scope so variables don’t leak onto the global object, and support import/export statements to pull in other modules. They’re also fetched with CORS rules applied and only ever execute once even if referenced multiple times, unlike classic scripts which re-execute per inclusion.',
+    example: `<script type="module">
+  import { greet } from './greet.js';
+  greet('world');
+</script>`,
+  },
+  {
+    id: 110,
+    category: 'Links, Images & Media',
+    difficulty: 'Intermediate',
+    question: 'What does the <track> element do for video, and what is the poster attribute for?',
+    answer:
+      '<track> attaches timed text like captions or subtitles to a <video> as a WebVTT file, letting the browser display synchronized text without you having to render it yourself, and it directly improves accessibility for deaf or hard-of-hearing users as well as viewers watching muted. poster, set on <video> itself, specifies an image shown before playback starts, so the viewer sees a meaningful preview frame instead of a blank black box while the video is still loading.',
+    example: `<video controls poster="preview.jpg">
+  <source src="movie.mp4" type="video/mp4">
+  <track src="captions-en.vtt" kind="captions" srclang="en" label="English">
+</video>`,
+  },
+  {
+    id: 111,
+    category: 'Performance & Best Practices',
+    difficulty: 'Advanced',
+    question: 'What’s the difference between preconnect, dns-prefetch, prefetch, and preload, and when would you use each?',
+    answer:
+      'dns-prefetch resolves a domain’s DNS ahead of time (cheapest hint, useful for third-party domains you’ll likely hit), while preconnect does that plus the TCP and TLS handshake, best reserved for a critical cross-origin resource you know you’ll need very soon. preload fetches a resource the current page definitely needs at high priority so it’s ready before the parser would otherwise discover it, like a hero font or critical CSS, while prefetch fetches a resource at low priority for a likely future navigation, like the next page in a wizard.',
+    example: `<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://api.example.com">
+<link rel="preload" href="hero-font.woff2" as="font" crossorigin>
+<link rel="prefetch" href="/next-page.html">`,
+  },
+  {
+    id: 112,
+    category: 'Performance & Best Practices',
+    difficulty: 'Advanced',
+    question: 'Can Content-Security-Policy be set via a <meta> tag, and how does that compare to setting it as an HTTP header?',
+    answer:
+      'Yes - a <meta http-equiv="Content-Security-Policy" content="..."> tag lets you define a policy restricting what scripts, styles, and other resources the page may load, which is useful when you can’t control server response headers (like on static hosting). It’s more limited than the HTTP header version though: it can’t enforce directives that need to apply before parsing begins, like frame-ancestors or report-uri, since by the time the meta tag is parsed some of the page has already started loading.',
+    example: `<meta http-equiv="Content-Security-Policy"
+  content="default-src 'self'; script-src 'self' https://trusted-cdn.com">`,
+  },
+  {
+    id: 113,
+    category: 'Common Gotchas & Advanced Topics',
+    difficulty: 'Intermediate',
+    question: 'What do the <base> element and <noscript> do?',
+    answer:
+      '<base href="..."> sets a default base URL that every relative link, image, and form action on the page resolves against, which is handy when a document is served from multiple locations but its relative links should always point back to one canonical origin - though it must appear early in <head> and only one is allowed per document. <noscript> holds fallback content that the browser renders only when JavaScript is disabled or unsupported, such as a warning message telling the user to enable it for the page to function.',
+    example: `<head>
+  <base href="https://example.com/app/">
+</head>
+<body>
+  <a href="page.html">Resolves to https://example.com/app/page.html</a>
+  <noscript>Please enable JavaScript to use this site.</noscript>
+</body>`,
+  },
+  {
+    id: 114,
+    category: 'HTML5 Features & APIs',
+    difficulty: 'Intermediate',
+    question: 'What is a Web App Manifest, and what does linking one enable?',
+    answer:
+      'A Web App Manifest is a JSON file, linked via <link rel="manifest">, that describes metadata about a web app - its name, icons, start URL, display mode, and theme color - which browsers use to let users “install” the site to their home screen or app launcher as if it were a native app. Combined with a service worker, it’s one of the core requirements for a Progressive Web App, and the theme_color and icons it declares control how the installed app looks in the OS’s app switcher and launcher.',
+    example: `<link rel="manifest" href="/manifest.json">
+<!-- manifest.json -->
+{
+  "name": "My App",
+  "icons": [{ "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }],
+  "display": "standalone",
+  "theme_color": "#0d47a1"
+}`,
+  },
 ];

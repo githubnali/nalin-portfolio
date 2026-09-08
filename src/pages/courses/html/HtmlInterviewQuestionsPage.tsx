@@ -77,15 +77,15 @@ const HtmlInterviewQuestionsPage: React.FC = () => {
   return (
     <article>
       <Seo
-        title="100 HTML Interview Questions"
-        description="100 HTML interview questions with detailed explanations and code examples, organized by category and difficulty - from basics to advanced topics."
+        title="114 HTML Interview Questions"
+        description="114 HTML interview questions with detailed explanations and code examples, organized by category and difficulty - from basics to advanced topics."
       />
       <FadeIn immediate y={12} duration={0.5}>
         <p className="text-xs tracking-widest text-fg/50 uppercase mb-3">Chapter 14 of 14</p>
       </FadeIn>
 
       <SplitHeading as="h1" immediate className="font-display font-light text-3xl md:text-4xl text-fg mb-6">
-        Top 100 HTML Interview Questions
+        Top 114 HTML Interview Questions
       </SplitHeading>
 
       <FadeIn immediate y={12} delay={0.1}>
@@ -165,9 +165,9 @@ const HtmlInterviewQuestionsPage: React.FC = () => {
                   className="flex-1 flex items-center justify-between gap-4 text-left"
                   aria-expanded={isOpen}
                 >
-                  <span className="text-sm text-fg">
-                    <span className="text-fg/30 mr-2">{item.id}.</span>
-                    {item.question}
+                  <span className="text-sm text-fg flex gap-2">
+                    <span className="text-fg/30 shrink-0">{item.id}.</span>
+                    <span>{item.question}</span>
                   </span>
                 </button>
                 <span

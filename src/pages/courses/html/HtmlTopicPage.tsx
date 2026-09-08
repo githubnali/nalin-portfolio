@@ -162,7 +162,7 @@ const HtmlTopicPage: React.FC = () => {
             to="/interview-prep/html/interview-questions"
             className="inline-flex items-center gap-2 text-sm text-fg/60 hover:text-fg transition-colors"
           >
-            Top 100 Interview Questions
+            Top 114 Interview Questions
             <ArrowRight size={16} />
           </Link>
         ) : (

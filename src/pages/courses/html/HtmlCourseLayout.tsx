@@ -38,7 +38,7 @@ const HtmlCourseLayout: React.FC = () => {
             </option>
           ))}
           <option value="interview-questions" className="bg-card">
-            100 HTML Interview Questions
+            114 HTML Interview Questions
           </option>
         </select>
 
@@ -73,8 +73,9 @@ const HtmlCourseLayout: React.FC = () => {
                       active ? 'bg-fg/10 text-fg' : 'text-fg/50 hover:text-fg hover:bg-fg/5'
                     }`}
                   >
-                    <span>
-                      {i + 1}. {topic.title}
+                    <span className="flex gap-1.5">
+                      <span className="shrink-0">{i + 1}.</span>
+                      <span>{topic.title}</span>
                     </span>
                     {topicProgress?.quizCompleted ? (
                       <span
@@ -98,7 +99,7 @@ const HtmlCourseLayout: React.FC = () => {
                     : 'text-fg/50 hover:text-fg hover:bg-fg/5'
                 }`}
               >
-                100 HTML Interview Questions
+                114 HTML Interview Questions
               </Link>
             </nav>
 

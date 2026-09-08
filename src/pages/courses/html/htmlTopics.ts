@@ -409,6 +409,30 @@ export const htmlTopics: HtmlTopic[] = [
         ],
       },
       {
+        heading: 'Responsive Images: srcset, sizes & <picture>',
+        body: [
+          'srcset lists multiple versions of an image at different widths, and sizes tells the browser how much space the image will occupy at different viewport widths - together they let the browser pick the best-fitting file instead of always downloading the largest one.',
+          '<picture> goes further: it lets you swap to entirely different image sources (a different crop, or a modern format like WebP/AVIF with a JPEG fallback) using multiple <source> elements, falling back to a plain <img> for browsers that don\'t support any listed source.',
+        ],
+        example: {
+          caption: 'Responsive images',
+          starterCode:
+            '<img\n  src="photo-800w.jpg"\n  srcset="photo-400w.jpg 400w, photo-800w.jpg 800w"\n  sizes="(max-width: 600px) 400px, 800px"\n  alt="Responsive product photo"\n/>',
+        },
+      },
+      {
+        heading: 'Lazy Loading & Fetch Priority',
+        body: [
+          'loading="lazy" tells the browser to defer loading an off-screen image until the user scrolls near it, saving bandwidth on long pages - never use it on above-the-fold images, since delaying your most important content actually hurts perceived load speed.',
+          'fetchpriority="high" does the opposite: it tells the browser to fetch a critical image (like a large hero banner) sooner, ahead of other resources competing for bandwidth.',
+        ],
+        example: {
+          caption: 'Prioritizing above-the-fold vs deferring the rest',
+          starterCode:
+            '<img src="hero.jpg" alt="Hero banner" fetchpriority="high" />\n<img src="footer-chart.jpg" alt="Chart" loading="lazy" />',
+        },
+      },
+      {
         heading: 'Figures & Captions',
         body: ['<figure> and <figcaption> tie an image to a caption semantically, not just visually.'],
         example: {
@@ -419,8 +443,13 @@ export const htmlTopics: HtmlTopic[] = [
       {
         heading: 'Favicons',
         body: [
-          'The small icon shown in a browser tab is set with <link rel="icon" href="favicon.ico"> inside <head>.',
+          'The small icon shown in a browser tab is set with <link rel="icon" href="favicon.ico"> inside <head>. Modern sites usually add a few variants for different contexts: an SVG or PNG icon for crisp rendering at any size, and an apple-touch-icon for when the site is added to an iOS home screen.',
         ],
+        example: {
+          caption: 'A more complete favicon setup',
+          starterCode:
+            '<link rel="icon" href="/favicon.ico" sizes="any" />\n<link rel="icon" type="image/svg+xml" href="/icon.svg" />\n<link rel="apple-touch-icon" href="/apple-touch-icon.png" />',
+        },
       },
     ],
     challenge: {
@@ -457,6 +486,16 @@ export const htmlTopics: HtmlTopic[] = [
           'Inside <head> with <link rel="icon">',
           'Inside <footer>',
           "It's automatic, no tag needed",
+        ],
+        correctIndex: 1,
+      },
+      {
+        question: 'What does loading="lazy" do on an <img>?',
+        options: [
+          'Compresses the image automatically',
+          'Defers loading the image until it nears the viewport',
+          'Converts the image to WebP',
+          'Blocks the image from loading entirely',
         ],
         correctIndex: 1,
       },
@@ -686,6 +725,18 @@ export const htmlTopics: HtmlTopic[] = [
           starterCode: '<head>\n  <meta name="viewport" content="width=device-width, initial-scale=1.0" />\n</head>',
         },
       },
+      {
+        heading: 'Native Interactivity: details, summary & dialog',
+        body: [
+          '<details> with a nested <summary> gives you a collapsible disclosure widget - like an FAQ answer or "show more" section - entirely without JavaScript; the browser handles the open/closed state.',
+          '<dialog> is a native modal element. Calling its showModal() method from JavaScript opens it centered with a backdrop and traps focus inside it automatically, which used to take a fair amount of custom code and ARIA attributes to get right.',
+        ],
+        example: {
+          caption: 'A native disclosure widget',
+          starterCode:
+            '<details>\n  <summary>What is semantic HTML?</summary>\n  <p>HTML that describes the meaning of content, not just its appearance.</p>\n</details>',
+        },
+      },
     ],
     challenge: {
       prompt: 'Lay out a page using <header>, <main>, and <footer>.',
@@ -719,6 +770,11 @@ export const htmlTopics: HtmlTopic[] = [
         ],
         correctIndex: 1,
       },
+      {
+        question: 'What do <details> and <summary> give you without any JavaScript?',
+        options: ['A tooltip', 'A collapsible disclosure widget', 'A modal dialog', 'A form validator'],
+        correctIndex: 1,
+      },
     ],
     interviewCategory: 'Semantic HTML & Accessibility',
   },
@@ -747,8 +803,30 @@ export const htmlTopics: HtmlTopic[] = [
       {
         heading: 'Labels, Placeholders & Validation',
         body: [
-          '<label for=""> tied to an input’s id improves accessibility and tap targets. A placeholder is a hint, not a replacement for a real label. required, min, max, and pattern give you validation without writing JavaScript.',
+          '<label for=""> tied to an input’s id improves accessibility and tap targets. A placeholder is a hint, not a replacement for a real label.',
         ],
+      },
+      {
+        heading: 'Validating Without JavaScript',
+        body: [
+          'required, min/max (for numbers and dates), minlength/maxlength, and pattern (a regular expression) let the browser block submission and show a built-in error message - no JavaScript needed. autofocus puts the cursor in a field as soon as the page loads, handy for a single-field search or login form.',
+        ],
+        example: {
+          caption: 'Built-in validation attributes',
+          starterCode:
+            '<label for="username">Username</label>\n<input\n  type="text"\n  id="username"\n  name="username"\n  pattern="[a-z0-9_]{3,16}"\n  minlength="3"\n  maxlength="16"\n  autofocus\n  required\n/>',
+        },
+      },
+      {
+        heading: 'Grouping Fields with fieldset & legend',
+        body: [
+          '<fieldset> visually and semantically groups related inputs - like a set of radio buttons or an address block - and <legend> gives that group a caption that screen readers announce before reading the fields inside it.',
+        ],
+        example: {
+          caption: 'Grouping related inputs',
+          starterCode:
+            '<fieldset>\n  <legend>Choose a plan</legend>\n  <label><input type="radio" name="plan" value="free" /> Free</label>\n  <label><input type="radio" name="plan" value="pro" /> Pro</label>\n</fieldset>',
+        },
       },
       {
         heading: 'Select & Textarea',
@@ -756,6 +834,28 @@ export const htmlTopics: HtmlTopic[] = [
         example: {
           starterCode:
             '<label for="role">Role</label>\n<select id="role" name="role">\n  <option value="dev">Developer</option>\n  <option value="design">Designer</option>\n</select>\n\n<label for="bio">Bio</label>\n<textarea id="bio" name="bio" rows="3"></textarea>',
+        },
+      },
+      {
+        heading: 'datalist, progress, meter & output',
+        body: [
+          '<datalist> attaches a list of suggestions to a text input via the list attribute - like autocomplete, but built into HTML. <progress> shows how far a task has gotten (like a file upload); <meter> shows a value within a known range (like disk usage). <output> displays the result of a calculation, often updated by JavaScript.',
+        ],
+        example: {
+          caption: 'Suggestions, progress & a gauge',
+          starterCode:
+            '<input list="browsers" name="browser" />\n<datalist id="browsers">\n  <option value="Chrome" />\n  <option value="Firefox" />\n  <option value="Safari" />\n</datalist>\n\n<progress value="70" max="100"></progress>\n<meter value="0.6" min="0" max="1"></meter>',
+        },
+      },
+      {
+        heading: 'File Uploads',
+        body: [
+          '<input type="file"> opens a native file picker. To actually send the chosen file(s) to a server, the form needs enctype="multipart/form-data" - the default encoding can\'t carry binary file data.',
+        ],
+        example: {
+          caption: 'A file-upload form',
+          starterCode:
+            '<form action="/upload" method="POST" enctype="multipart/form-data">\n  <label for="resume">Resume</label>\n  <input type="file" id="resume" name="resume" accept=".pdf" />\n  <button type="submit">Upload</button>\n</form>',
         },
       },
     ],
@@ -786,6 +886,21 @@ export const htmlTopics: HtmlTopic[] = [
         options: ['<input type="list">', '<select>', '<datalist> alone', '<option> on its own'],
         correctIndex: 1,
       },
+      {
+        question: 'What does <fieldset>/<legend> provide?',
+        options: [
+          'A dropdown menu',
+          'A grouping of related fields with an announced caption',
+          'Client-side validation',
+          'A file upload button',
+        ],
+        correctIndex: 1,
+      },
+      {
+        question: 'Which form attribute is required to upload files to a server?',
+        options: ['method="upload"', 'enctype="multipart/form-data"', 'type="file"', 'accept="*"'],
+        correctIndex: 1,
+      },
     ],
     interviewCategory: 'Forms & Inputs',
   },
@@ -805,19 +920,23 @@ export const htmlTopics: HtmlTopic[] = [
       },
       {
         heading: 'Video & Audio',
-        body: ['<video> and <audio> play natively with the controls attribute. Multiple <source> elements provide format fallbacks.'],
+        body: [
+          '<video> and <audio> play natively with the controls attribute. Multiple <source> elements provide format fallbacks. poster sets a preview image shown before playback starts, and <track> attaches captions or subtitles - important for accessibility and for viewers watching with the sound off.',
+        ],
         example: {
           starterCode:
-            '<video controls width="320">\n  <source src="movie.mp4" type="video/mp4" />\n  <source src="movie.ogg" type="video/ogg" />\n  Your browser does not support the video tag.\n</video>',
+            '<video controls width="320" poster="preview.jpg">\n  <source src="movie.mp4" type="video/mp4" />\n  <source src="movie.ogg" type="video/ogg" />\n  <track kind="captions" src="captions-en.vtt" srclang="en" label="English" />\n  Your browser does not support the video tag.\n</video>',
         },
       },
       {
         heading: 'Canvas & SVG (Intro)',
         body: [
-          '<canvas> is a JavaScript-drawn bitmap surface, great for charts and games. <svg> is a vector format written directly in markup that scales without losing quality.',
+          '<canvas> is a JavaScript-drawn bitmap surface, great for charts and games - you get an empty rectangle in the markup, then draw onto it imperatively via its 2D (or WebGL) context. <svg> is a vector format written directly in markup that scales without losing quality, and its shapes are real DOM nodes you can select and style with CSS.',
         ],
         example: {
-          starterCode: '<svg width="120" height="120">\n  <circle cx="60" cy="60" r="50" fill="#1dbf73" />\n</svg>',
+          caption: 'Drawing on a canvas',
+          starterCode:
+            '<canvas id="c" width="120" height="120"></canvas>\n<script>\n  const ctx = document.getElementById("c").getContext("2d");\n  ctx.fillStyle = "#1dbf73";\n  ctx.fillRect(10, 10, 100, 100);\n</script>',
         },
       },
       {
@@ -866,6 +985,11 @@ export const htmlTopics: HtmlTopic[] = [
           'Inside <head> as a meta tag',
           "It's a CSS property",
         ],
+        correctIndex: 1,
+      },
+      {
+        question: 'What does the <track> element add to a <video>?',
+        options: ['A second video source', 'Captions or subtitles', 'A poster image', 'Playback controls'],
         correctIndex: 1,
       },
     ],

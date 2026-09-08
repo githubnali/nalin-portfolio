@@ -12,6 +12,8 @@ import JS from '../assets/projects/skills/javascript.png';
 import Reactjs from '../assets/projects/skills/react.png';
 import Nodejs from '../assets/projects/skills/nodejs.png';
 import Express from '../assets/projects/skills/express.png';
+import TypeScript from '../assets/projects/skills/typescript.png';
+import Python from '../assets/projects/skills/python.png';
 
 interface Topic {
   name: string;
@@ -22,16 +24,18 @@ interface Topic {
 }
 
 const topics: Topic[] = [
-  { name: 'HTML', focus: 'Semantic markup & accessibility', icon: HTML, path: '/interview-prep/html' },
-  { name: 'CSS', focus: 'Layouts, Flexbox, Grid & animations', icon: Css },
-  { name: 'JavaScript', focus: 'Core concepts, closures & async', icon: JS },
-  { name: 'React', focus: 'Hooks, patterns & performance', icon: Reactjs },
-  { name: 'Node.js', focus: 'Runtime internals & APIs', icon: Nodejs },
-  { name: 'Express', focus: 'REST APIs & middleware', icon: Express },
-  { name: 'MongoDB', focus: 'Schema design & aggregation', Icon: Database },
   { name: 'DSA', focus: 'Arrays, trees, graphs & complexity', Icon: Binary },
   { name: 'Frontend System Design', focus: 'Scalable, component-driven UI architecture', Icon: LayoutTemplate },
   { name: 'Artificial Intelligence', focus: 'LLMs, prompting & AI-assisted tooling', Icon: BrainCircuit },
+  { name: 'React', focus: 'Hooks, patterns & performance', icon: Reactjs },
+  { name: 'JavaScript', focus: 'Core concepts, closures & async', icon: JS },
+  { name: 'TypeScript', focus: 'Types, generics & type-safe patterns', icon: TypeScript },
+  { name: 'Node.js', focus: 'Runtime internals & APIs', icon: Nodejs },
+  { name: 'Express', focus: 'REST APIs & middleware', icon: Express },
+  { name: 'MongoDB', focus: 'Schema design & aggregation', Icon: Database },
+  { name: 'Python', focus: 'Syntax, data structures & OOP basics', icon: Python },
+  { name: 'HTML', focus: 'Semantic markup & accessibility', icon: HTML, path: '/interview-prep/html' },
+  { name: 'CSS', focus: 'Layouts, Flexbox, Grid & animations', icon: Css },
 ];
 
 const InterviewPrepPage: React.FC = () => {
@@ -39,7 +43,7 @@ const InterviewPrepPage: React.FC = () => {
     <section className="pt-32 pb-20 lg:pt-44 lg:pb-28">
       <Seo
         title="Interview Prep"
-        description="Free interview preparation resources covering HTML, CSS, JavaScript, React, Node.js, Express, MongoDB, DSA, frontend system design, and AI."
+        description="Free interview preparation resources covering HTML, CSS, JavaScript, TypeScript, React, Node.js, Express, MongoDB, Python, DSA, frontend system design, and AI."
       />
       <div className="max-w-6xl mx-auto px-6 lg:px-12">
         <FadeIn immediate y={12} duration={0.5}>
