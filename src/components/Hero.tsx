@@ -4,7 +4,7 @@ import { ArrowRight, Download } from 'lucide-react';
 import SplitHeading from './anim/SplitHeading';
 import FadeIn from './anim/FadeIn';
 
-import HeroImg from '../assets/hero-image.png';
+import HeroImg from '../assets/hero-image.webp';
 import resume from '../assets/My_Resume.pdf';
 
 import ReactIcon from '../assets/projects/skills/react.png';

@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import SplitHeading from '../components/anim/SplitHeading';
 import FadeIn from '../components/anim/FadeIn';
 import SiteMockup, { MOCKUP_COLORS } from '../components/mockups/SiteMockup';
+import Seo, { SITE_URL } from '../components/Seo';
 import { getServiceBySlug, services } from '../data/services';
 
 const ServiceDetailPage: React.FC = () => {
@@ -21,6 +22,22 @@ const ServiceDetailPage: React.FC = () => {
 
   return (
     <section className="pt-32 pb-20 lg:pt-44 lg:pb-28">
+      <Seo
+        title={service.name}
+        description={service.description}
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'Service',
+          serviceType: service.name,
+          description: service.description,
+          provider: {
+            '@type': 'Person',
+            name: 'Nagaraju Nali',
+            url: SITE_URL,
+          },
+          url: `${SITE_URL}/services/${service.slug}`,
+        }}
+      />
       <div className="max-w-6xl mx-auto px-6 lg:px-12">
         <FadeIn immediate y={12} duration={0.5}>
           <Link

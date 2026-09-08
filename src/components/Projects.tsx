@@ -5,7 +5,7 @@ import FadeIn from './anim/FadeIn';
 import Taskmate from '../assets/projects/taskmate.webp';
 import Cinemate from '../assets/projects/cinemate.webp';
 import MomsKitchen from '../assets/projects/moms-kitchen.webp';
-import NetflixGPT from '../assets/projects/netflix-gpt.png';
+import NetflixGPT from '../assets/projects/netflix-gpt.webp';
 import BugTracker from '../assets/projects/bug-tracker.png';
 
 interface Project {

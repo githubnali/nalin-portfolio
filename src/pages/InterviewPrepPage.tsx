@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, Database, Binary, LayoutTemplate, BrainCircuit }
 
 import SplitHeading from '../components/anim/SplitHeading';
 import FadeIn from '../components/anim/FadeIn';
+import Seo from '../components/Seo';
 
 import HTML from '../assets/projects/skills/html.png';
 import Css from '../assets/projects/skills/css.png';
@@ -36,6 +37,10 @@ const topics: Topic[] = [
 const InterviewPrepPage: React.FC = () => {
   return (
     <section className="pt-32 pb-20 lg:pt-44 lg:pb-28">
+      <Seo
+        title="Interview Prep"
+        description="Free interview preparation resources covering HTML, CSS, JavaScript, React, Node.js, Express, MongoDB, DSA, frontend system design, and AI."
+      />
       <div className="max-w-6xl mx-auto px-6 lg:px-12">
         <FadeIn immediate y={12} duration={0.5}>
           <Link

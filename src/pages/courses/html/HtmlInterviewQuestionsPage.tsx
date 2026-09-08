@@ -6,6 +6,7 @@ import SplitHeading from '../../../components/anim/SplitHeading';
 import FadeIn from '../../../components/anim/FadeIn';
 import { htmlInterviewQuestions } from './htmlInterviewQuestions';
 import { highlightHtml } from '../../../lib/highlightHtml';
+import Seo from '../../../components/Seo';
 
 const categories = Array.from(new Set(htmlInterviewQuestions.map((q) => q.category)));
 const difficulties = ['Beginner', 'Intermediate', 'Advanced'];
@@ -75,6 +76,10 @@ const HtmlInterviewQuestionsPage: React.FC = () => {
 
   return (
     <article>
+      <Seo
+        title="100 HTML Interview Questions"
+        description="100 HTML interview questions with detailed explanations and code examples, organized by category and difficulty - from basics to advanced topics."
+      />
       <FadeIn immediate y={12} duration={0.5}>
         <p className="text-xs tracking-widest text-fg/50 uppercase mb-3">Chapter 14 of 14</p>
       </FadeIn>

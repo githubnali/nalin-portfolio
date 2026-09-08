@@ -9,6 +9,7 @@ import Quiz from '../../../components/practice/Quiz';
 import { htmlTopics } from './htmlTopics';
 import { markVisited, setQuizResult, useProgress } from '../../../lib/progress';
 import { estimateTopicMinutes } from '../../../lib/estimateTopicTime';
+import Seo, { SITE_URL } from '../../../components/Seo';
 
 const HtmlTopicPage: React.FC = () => {
   const { topicSlug } = useParams();
@@ -33,6 +34,24 @@ const HtmlTopicPage: React.FC = () => {
 
   return (
     <article key={topic.slug}>
+      <Seo
+        title={`${topic.title} - HTML Tutorial`}
+        description={topic.intro}
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Interview Prep', item: `${SITE_URL}/interview-prep` },
+            { '@type': 'ListItem', position: 2, name: 'HTML Tutorial', item: `${SITE_URL}/interview-prep/html` },
+            {
+              '@type': 'ListItem',
+              position: 3,
+              name: topic.title,
+              item: `${SITE_URL}/interview-prep/html/${topic.slug}`,
+            },
+          ],
+        }}
+      />
       <FadeIn immediate y={8} duration={0.5} className="mb-5">
         <div className="flex items-center justify-between mb-1.5">
           <span className="text-[11px] text-fg/40">Course progress</span>

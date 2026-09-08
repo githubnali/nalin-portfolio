@@ -4,11 +4,16 @@ import { ArrowLeft, ArrowRight, Sparkles } from 'lucide-react';
 
 import SplitHeading from '../components/anim/SplitHeading';
 import FadeIn from '../components/anim/FadeIn';
+import Seo from '../components/Seo';
 import { services } from '../data/services';
 
 const ServicesPage: React.FC = () => {
   return (
     <section className="relative pt-32 pb-20 lg:pt-44 lg:pb-28 overflow-hidden">
+      <Seo
+        title="Services"
+        description="Websites, fullstack applications, admin dashboards, landing pages, EDMs, and hosting - built with React, Angular, Node.js, and MongoDB."
+      />
       <div
         aria-hidden
         className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[60rem] h-[30rem] rounded-full bg-accent/10 blur-[120px]"

@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import Navbar from './components/Navbar';
@@ -11,12 +10,9 @@ import ServiceDetailPage from './pages/ServiceDetailPage';
 import HtmlCourseLayout from './pages/courses/html/HtmlCourseLayout';
 import HtmlTopicPage from './pages/courses/html/HtmlTopicPage';
 import HtmlInterviewQuestionsPage from './pages/courses/html/HtmlInterviewQuestionsPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
-  React.useEffect(() => {
-    document.title = 'Nagaraju Nali | Frontend Engineer';
-  }, []);
-
   return (
     <ThemeProvider>
       <BrowserRouter>
@@ -34,6 +30,7 @@ function App() {
                 <Route path="interview-questions" element={<HtmlInterviewQuestionsPage />} />
                 <Route path=":topicSlug" element={<HtmlTopicPage />} />
               </Route>
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </main>
           <Footer />
