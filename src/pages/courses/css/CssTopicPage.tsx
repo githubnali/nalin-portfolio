@@ -6,48 +6,48 @@ import SplitHeading from '../../../components/anim/SplitHeading';
 import FadeIn from '../../../components/anim/FadeIn';
 import PracticeTerminal from '../../../components/practice/PracticeTerminal';
 import Quiz from '../../../components/practice/Quiz';
-import { htmlTopics } from './htmlTopics';
+import { cssTopics } from './cssTopics';
 import { markVisited, setQuizResult, useProgress } from '../../../lib/progress';
 import { estimateTopicMinutes } from '../../../lib/estimateTopicTime';
 import Seo, { SITE_URL } from '../../../components/Seo';
 
-const HtmlTopicPage: React.FC = () => {
+const CssTopicPage: React.FC = () => {
   const { topicSlug } = useParams();
-  const index = htmlTopics.findIndex((t) => t.slug === topicSlug);
+  const index = cssTopics.findIndex((t) => t.slug === topicSlug);
   const progress = useProgress();
 
   useEffect(() => {
-    if (topicSlug) markVisited(`html:${topicSlug}`);
+    if (topicSlug) markVisited(`css:${topicSlug}`);
   }, [topicSlug]);
 
   if (index === -1) {
-    return <Navigate to={`/interview-prep/html/${htmlTopics[0].slug}`} replace />;
+    return <Navigate to={`/interview-prep/css/${cssTopics[0].slug}`} replace />;
   }
 
-  const topic = htmlTopics[index];
-  const prev = htmlTopics[index - 1];
-  const next = htmlTopics[index + 1];
-  const isLast = index === htmlTopics.length - 1;
+  const topic = cssTopics[index];
+  const prev = cssTopics[index - 1];
+  const next = cssTopics[index + 1];
+  const isLast = index === cssTopics.length - 1;
 
-  const completedCount = htmlTopics.filter((t) => progress[`html:${t.slug}`]?.quizCompleted).length;
-  const completePct = Math.round((completedCount / htmlTopics.length) * 100);
+  const completedCount = cssTopics.filter((t) => progress[`css:${t.slug}`]?.quizCompleted).length;
+  const completePct = Math.round((completedCount / cssTopics.length) * 100);
 
   return (
     <article key={topic.slug}>
       <Seo
-        title={`${topic.title} - HTML Tutorial`}
+        title={`${topic.title} - CSS Tutorial`}
         description={topic.intro}
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'BreadcrumbList',
           itemListElement: [
             { '@type': 'ListItem', position: 1, name: 'Interview Prep', item: `${SITE_URL}/interview-prep` },
-            { '@type': 'ListItem', position: 2, name: 'HTML Tutorial', item: `${SITE_URL}/interview-prep/html` },
+            { '@type': 'ListItem', position: 2, name: 'CSS Tutorial', item: `${SITE_URL}/interview-prep/css` },
             {
               '@type': 'ListItem',
               position: 3,
               name: topic.title,
-              item: `${SITE_URL}/interview-prep/html/${topic.slug}`,
+              item: `${SITE_URL}/interview-prep/css/${topic.slug}`,
             },
           ],
         }}
@@ -56,7 +56,7 @@ const HtmlTopicPage: React.FC = () => {
         <div className="flex items-center justify-between mb-1.5">
           <span className="text-[11px] text-fg/40">Course progress</span>
           <span className="text-[11px] text-fg/40">
-            {completedCount}/{htmlTopics.length} chapters &middot; {completePct}%
+            {completedCount}/{cssTopics.length} chapters &middot; {completePct}%
           </span>
         </div>
         <div className="h-1.5 rounded-full bg-fg/10 overflow-hidden">
@@ -70,7 +70,7 @@ const HtmlTopicPage: React.FC = () => {
       <FadeIn immediate y={12} delay={0.05} duration={0.5}>
         <div className="flex items-center gap-3 mb-3">
           <p className="text-xs tracking-widest text-fg/50 uppercase">
-            Chapter {index + 1} of {htmlTopics.length + 1}
+            Chapter {index + 1} of {cssTopics.length + 1}
           </p>
           <span className="inline-flex items-center gap-1 text-xs text-fg/40">
             <Clock size={12} />~{estimateTopicMinutes(topic)} min
@@ -116,12 +116,12 @@ const HtmlTopicPage: React.FC = () => {
       </FadeIn>
 
       <FadeIn immediate y={16} delay={0.22} className="mt-14 pt-10 border-t border-fg/10">
-        <Quiz questions={topic.quiz} onComplete={(score, total) => setQuizResult(`html:${topic.slug}`, score, total)} />
+        <Quiz questions={topic.quiz} onComplete={(score, total) => setQuizResult(`css:${topic.slug}`, score, total)} />
       </FadeIn>
 
       <FadeIn immediate y={16} delay={0.24} className="mt-10">
         <Link
-          to={`/interview-prep/html/interview-questions?category=${encodeURIComponent(topic.interviewCategory)}`}
+          to={`/interview-prep/css/interview-questions?category=${encodeURIComponent(topic.interviewCategory)}`}
           className="flex items-center justify-between gap-4 rounded-2xl bg-card border border-fg/10 p-5 hover:border-fg/30 transition-colors group"
         >
           <div className="flex items-center gap-3">
@@ -140,7 +140,7 @@ const HtmlTopicPage: React.FC = () => {
       <div className="flex items-center justify-between mt-14 pt-8 border-t border-fg/10">
         {prev ? (
           <Link
-            to={`/interview-prep/html/${prev.slug}`}
+            to={`/interview-prep/css/${prev.slug}`}
             className="inline-flex items-center gap-2 text-sm text-fg/60 hover:text-fg transition-colors"
           >
             <ArrowLeft size={16} />
@@ -151,7 +151,7 @@ const HtmlTopicPage: React.FC = () => {
         )}
         {next ? (
           <Link
-            to={`/interview-prep/html/${next.slug}`}
+            to={`/interview-prep/css/${next.slug}`}
             className="inline-flex items-center gap-2 text-sm text-fg/60 hover:text-fg transition-colors"
           >
             {next.title}
@@ -159,10 +159,10 @@ const HtmlTopicPage: React.FC = () => {
           </Link>
         ) : isLast ? (
           <Link
-            to="/interview-prep/html/interview-questions"
+            to="/interview-prep/css/interview-questions"
             className="inline-flex items-center gap-2 text-sm text-fg/60 hover:text-fg transition-colors"
           >
-            Top 114 Interview Questions
+            Top 100 Interview Questions
             <ArrowRight size={16} />
           </Link>
         ) : (
@@ -173,4 +173,4 @@ const HtmlTopicPage: React.FC = () => {
   );
 };
 
-export default HtmlTopicPage;
+export default CssTopicPage;

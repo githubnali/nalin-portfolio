@@ -1,4 +1,9 @@
-import type { HtmlTopic } from '../pages/courses/html/htmlTopics';
+export interface EstimatableTopic {
+  intro: string;
+  sections: { heading: string; body: string[]; example?: unknown }[];
+  challenge: { prompt: string };
+  quiz: unknown[];
+}
 
 const WORDS_PER_MINUTE = 180;
 const MINUTES_PER_EXAMPLE = 1.5; // time to read + try a code snippet
@@ -9,7 +14,7 @@ const MIN_MINUTES = 4;
 const wordCount = (text: string) => text.trim().split(/\s+/).filter(Boolean).length;
 
 /** Rough estimated time to read through and complete a topic, based on its actual content. */
-export function estimateTopicMinutes(topic: HtmlTopic): number {
+export function estimateTopicMinutes(topic: EstimatableTopic): number {
   let words = wordCount(topic.intro);
   let exampleCount = 0;
 

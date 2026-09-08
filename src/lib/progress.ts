@@ -49,8 +49,9 @@ export function setQuizResult(slug: string, score: number, total: number) {
   persistAndEmit();
 }
 
-export function resetProgress() {
-  state = {};
+/** Resets only progress for keys under the given course prefix (e.g. 'html:'), leaving other courses untouched. */
+export function resetProgress(coursePrefix: string) {
+  state = Object.fromEntries(Object.entries(state).filter(([key]) => !key.startsWith(coursePrefix)));
   persistAndEmit();
 }
 

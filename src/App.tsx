@@ -10,6 +10,9 @@ import ServiceDetailPage from './pages/ServiceDetailPage';
 import HtmlCourseLayout from './pages/courses/html/HtmlCourseLayout';
 import HtmlTopicPage from './pages/courses/html/HtmlTopicPage';
 import HtmlInterviewQuestionsPage from './pages/courses/html/HtmlInterviewQuestionsPage';
+import CssCourseLayout from './pages/courses/css/CssCourseLayout';
+import CssTopicPage from './pages/courses/css/CssTopicPage';
+import CssInterviewQuestionsPage from './pages/courses/css/CssInterviewQuestionsPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
@@ -29,6 +32,11 @@ function App() {
                 <Route index element={<Navigate to="introduction" replace />} />
                 <Route path="interview-questions" element={<HtmlInterviewQuestionsPage />} />
                 <Route path=":topicSlug" element={<HtmlTopicPage />} />
+              </Route>
+              <Route path="/interview-prep/css" element={<CssCourseLayout />}>
+                <Route index element={<Navigate to="introduction" replace />} />
+                <Route path="interview-questions" element={<CssInterviewQuestionsPage />} />
+                <Route path=":topicSlug" element={<CssTopicPage />} />
               </Route>
               <Route path="*" element={<NotFoundPage />} />
             </Routes>

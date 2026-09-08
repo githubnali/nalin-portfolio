@@ -30,11 +30,29 @@ const HTML_TOPIC_SLUGS = [
   'entities-best-practices',
 ];
 
+// Keep in sync with src/pages/courses/css/cssTopics.ts.
+const CSS_TOPIC_SLUGS = [
+  'introduction',
+  'selectors',
+  'colors-units',
+  'box-model',
+  'typography',
+  'backgrounds-borders',
+  'display-positioning',
+  'flexbox',
+  'grid',
+  'responsive-design',
+  'transitions-animations',
+  'pseudo-classes-elements',
+  'variables-best-practices',
+];
+
 const staticRoutes = [
   { path: '/', priority: '1.0', changefreq: 'monthly' },
   { path: '/services', priority: '0.9', changefreq: 'monthly' },
   { path: '/interview-prep', priority: '0.9', changefreq: 'monthly' },
   { path: '/interview-prep/html/interview-questions', priority: '0.8', changefreq: 'monthly' },
+  { path: '/interview-prep/css/interview-questions', priority: '0.8', changefreq: 'monthly' },
 ];
 
 const serviceRoutes = SERVICE_SLUGS.map((slug) => ({
@@ -49,7 +67,13 @@ const topicRoutes = HTML_TOPIC_SLUGS.map((slug) => ({
   changefreq: 'yearly',
 }));
 
-const allRoutes = [...staticRoutes, ...serviceRoutes, ...topicRoutes];
+const cssTopicRoutes = CSS_TOPIC_SLUGS.map((slug) => ({
+  path: `/interview-prep/css/${slug}`,
+  priority: '0.7',
+  changefreq: 'yearly',
+}));
+
+const allRoutes = [...staticRoutes, ...serviceRoutes, ...topicRoutes, ...cssTopicRoutes];
 
 const urlEntries = allRoutes
   .map(

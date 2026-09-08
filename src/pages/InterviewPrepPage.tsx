@@ -35,7 +35,7 @@ const topics: Topic[] = [
   { name: 'MongoDB', focus: 'Schema design & aggregation', Icon: Database },
   { name: 'Python', focus: 'Syntax, data structures & OOP basics', icon: Python },
   { name: 'HTML', focus: 'Semantic markup & accessibility', icon: HTML, path: '/interview-prep/html' },
-  { name: 'CSS', focus: 'Layouts, Flexbox, Grid & animations', icon: Css },
+  { name: 'CSS', focus: 'Layouts, Flexbox, Grid & animations', icon: Css, path: '/interview-prep/css' },
 ];
 
 const InterviewPrepPage: React.FC = () => {

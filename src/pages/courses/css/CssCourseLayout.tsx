@@ -1,17 +1,17 @@
 import React from 'react';
 import { Outlet, Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Check } from 'lucide-react';
-import { htmlTopics } from './htmlTopics';
+import { cssTopics } from './cssTopics';
 import { useProgress, resetProgress } from '../../../lib/progress';
 
-const HtmlCourseLayout: React.FC = () => {
+const CssCourseLayout: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { topicSlug } = useParams();
   const progress = useProgress();
 
-  const completedCount = htmlTopics.filter((t) => progress[`html:${t.slug}`]?.quizCompleted).length;
-  const completePct = Math.round((completedCount / htmlTopics.length) * 100);
+  const completedCount = cssTopics.filter((t) => progress[`css:${t.slug}`]?.quizCompleted).length;
+  const completePct = Math.round((completedCount / cssTopics.length) * 100);
 
   const currentValue = location.pathname.endsWith('/interview-questions') ? 'interview-questions' : topicSlug;
 
@@ -29,16 +29,16 @@ const HtmlCourseLayout: React.FC = () => {
         {/* Mobile chapter picker */}
         <select
           value={currentValue}
-          onChange={(e) => navigate(`/interview-prep/html/${e.target.value}`)}
+          onChange={(e) => navigate(`/interview-prep/css/${e.target.value}`)}
           className="lg:hidden w-full mb-8 px-4 py-3 rounded-xl bg-card border border-fg/10 text-fg text-sm focus:outline-none"
         >
-          {htmlTopics.map((topic, i) => (
+          {cssTopics.map((topic, i) => (
             <option key={topic.slug} value={topic.slug} className="bg-card">
-              {i + 1}. {topic.title} {progress[`html:${topic.slug}`]?.quizCompleted ? '✓' : ''}
+              {i + 1}. {topic.title} {progress[`css:${topic.slug}`]?.quizCompleted ? '✓' : ''}
             </option>
           ))}
           <option value="interview-questions" className="bg-card">
-            114 HTML Interview Questions
+            100 CSS Interview Questions
           </option>
         </select>
 
@@ -46,9 +46,9 @@ const HtmlCourseLayout: React.FC = () => {
           <aside className="hidden lg:block sticky top-28 self-start max-h-[calc(100vh-8rem)] overflow-y-auto pb-10">
             <div className="px-3 mb-4">
               <div className="flex items-center justify-between mb-2">
-                <p className="text-xs tracking-widest text-fg/40 uppercase">HTML Tutorial</p>
+                <p className="text-xs tracking-widest text-fg/40 uppercase">CSS Tutorial</p>
                 <span className="text-xs text-fg/40">
-                  {completedCount}/{htmlTopics.length}
+                  {completedCount}/{cssTopics.length}
                 </span>
               </div>
               <div className="h-1 rounded-full bg-fg/10 overflow-hidden">
@@ -60,10 +60,10 @@ const HtmlCourseLayout: React.FC = () => {
             </div>
 
             <nav className="space-y-0.5">
-              {htmlTopics.map((topic, i) => {
-                const path = `/interview-prep/html/${topic.slug}`;
+              {cssTopics.map((topic, i) => {
+                const path = `/interview-prep/css/${topic.slug}`;
                 const active = location.pathname === path;
-                const topicProgress = progress[`html:${topic.slug}`];
+                const topicProgress = progress[`css:${topic.slug}`];
 
                 return (
                   <Link
@@ -92,14 +92,14 @@ const HtmlCourseLayout: React.FC = () => {
               })}
 
               <Link
-                to="/interview-prep/html/interview-questions"
+                to="/interview-prep/css/interview-questions"
                 className={`block px-3 py-2 rounded-lg text-sm transition-colors mt-2 pt-2 border-t border-fg/10 ${
                   location.pathname.endsWith('/interview-questions')
                     ? 'bg-fg/10 text-fg'
                     : 'text-fg/50 hover:text-fg hover:bg-fg/5'
                 }`}
               >
-                114 HTML Interview Questions
+                100 CSS Interview Questions
               </Link>
             </nav>
 
@@ -107,7 +107,7 @@ const HtmlCourseLayout: React.FC = () => {
               <button
                 type="button"
                 onClick={() => {
-                  if (confirm('Reset your HTML course progress?')) resetProgress('html:');
+                  if (confirm('Reset your CSS course progress?')) resetProgress('css:');
                 }}
                 className="mt-4 px-3 text-xs text-fg/30 hover:text-fg/60 transition-colors"
               >
@@ -125,4 +125,4 @@ const HtmlCourseLayout: React.FC = () => {
   );
 };
 
-export default HtmlCourseLayout;
+export default CssCourseLayout;

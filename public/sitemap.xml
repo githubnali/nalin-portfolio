@@ -21,6 +21,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://nalin-portfolio.netlify.app/interview-prep/css/interview-questions</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://nalin-portfolio.netlify.app/services/websites-web-apps</loc>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
@@ -112,6 +117,71 @@
   </url>
   <url>
     <loc>https://nalin-portfolio.netlify.app/interview-prep/html/entities-best-practices</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nalin-portfolio.netlify.app/interview-prep/css/introduction</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nalin-portfolio.netlify.app/interview-prep/css/selectors</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nalin-portfolio.netlify.app/interview-prep/css/colors-units</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nalin-portfolio.netlify.app/interview-prep/css/box-model</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nalin-portfolio.netlify.app/interview-prep/css/typography</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nalin-portfolio.netlify.app/interview-prep/css/backgrounds-borders</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nalin-portfolio.netlify.app/interview-prep/css/display-positioning</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nalin-portfolio.netlify.app/interview-prep/css/flexbox</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nalin-portfolio.netlify.app/interview-prep/css/grid</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nalin-portfolio.netlify.app/interview-prep/css/responsive-design</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nalin-portfolio.netlify.app/interview-prep/css/transitions-animations</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nalin-portfolio.netlify.app/interview-prep/css/pseudo-classes-elements</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nalin-portfolio.netlify.app/interview-prep/css/variables-best-practices</loc>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
