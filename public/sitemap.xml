@@ -190,4 +190,9 @@
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://nalin-portfolio.netlify.app/interview-prep/ai/chatgpt-know-or-guess</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>

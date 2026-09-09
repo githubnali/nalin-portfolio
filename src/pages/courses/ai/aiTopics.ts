@@ -3,12 +3,15 @@ import type { QuizQuestion } from '../../../components/practice/Quiz';
 export interface TopicSection {
   heading: string;
   body: string[];
-  example?: {
-    caption?: string;
-    starterCode: string;
-  };
   /** Key of an illustrative diagram component to render for this section, if any. */
-  visual?: 'turing-test' | 'si-vs-ai' | 'ml-vs-dl' | 'attention';
+  visual?:
+    | 'turing-test'
+    | 'si-vs-ai'
+    | 'ml-vs-dl'
+    | 'attention'
+    | 'search-vs-generation'
+    | 'base-model-stack'
+    | 'training-vs-inference';
 }
 
 export interface AiTopic {
@@ -59,11 +62,6 @@ export const aiTopics: AiTopic[] = [
           'The problem: rules do not scale. Anyone can phrase the same idea a slightly different way, and a purely rule-based system breaks. It is simply not possible to write a condition for every case - one of the reasons the field cooled off during the AI winter mentioned above.',
           'One famous milestone from this rule-based era: in 1997, IBM\'s Deep Blue defeated world chess champion Garry Kasparov. Despite the headlines, Deep Blue was not really "intelligent" in the modern sense - it was a system built on permutations and combinations, evaluating possible chess moves rather than learning from experience.',
         ],
-        example: {
-          caption: 'A rule-based "spam filter" - the pre-machine-learning way to decide',
-          starterCode:
-            '<div id="result" style="font-family: sans-serif; font-size: 18px;"></div>\n<script>\n  function checkSpam(text) {\n    const spamWords = [\'lottery\', \'free\', \'winner\'];\n    return spamWords.some((word) => text.toLowerCase().includes(word));\n  }\n\n  const message = "You won a FREE lottery prize!";\n  const isSpam = checkSpam(message);\n  document.getElementById(\'result\').textContent =\n    (isSpam ? \'Flagged as spam: \' : \'Not spam: \') + message;\n</script>',
-        },
       },
       {
         heading: 'The Rise of Machine Learning',
@@ -170,6 +168,138 @@ export const aiTopics: AiTopic[] = [
           'It trained the first neural network on ImageNet',
         ],
         correctIndex: 1,
+      },
+    ],
+  },
+  {
+    slug: 'chatgpt-know-or-guess',
+    title: 'Does ChatGPT Know or Does It Guess?',
+    intro:
+      'Where does ChatGPT actually get its answers from - does it search live, does it "know" things, or is it just guessing? And how is that fundamentally different from Google Search?',
+    sections: [
+      {
+        heading: 'Google Search vs ChatGPT: Two Different Jobs',
+        body: [
+          'People are increasingly reaching for ChatGPT instead of Google, mostly because it hands back a direct answer instead of a page of links to click through - no more juggling ten open tabs (RIP, classic Stack Overflow browsing sessions).',
+          'But there is a real difference in what is happening underneath. You can ask ChatGPT almost anything, and if the answer genuinely exists in what it learned, it will give you something close to correct. If the answer does not exist at all, it may still confidently simulate one anyway - with no way for you to tell the difference from the response alone. Google, by contrast, is fundamentally a filter over real documents that already exist somewhere.',
+        ],
+      },
+      {
+        heading: 'How Google Search Actually Works',
+        body: [
+          'Google takes your query, searches its index, ranks the most relevant documents, and returns them. An index is nothing mysterious - think of it as a book\'s table of contents: instead of reading every page to find something, you jump straight to the reference.',
+          'Google keeps that index fresh using crawlers (also called spiders) that continuously scan the web and feed new or updated pages back in - which is how something posted a minute ago can already show up in results. Not every page gets to rank well, though: crawlers weigh things like domain authority, page speed, keyword relevance, average time spent on a page, backlinks from other sites, meta tags, publish date, and general SEO health. Google\'s exact ranking algorithm is not open source, so what we have are industry best practices, not a published formula.',
+          'None of this guarantees truth. Rankings can be imperfect, outdated, or put an irrelevant result above a better one four spots down. The upside: you can always see which website an answer came from, and decide for yourself whether to trust that source.',
+        ],
+      },
+      {
+        heading: 'Retrieval vs Generation',
+        body: [
+          'ChatGPT works completely differently. It does not retrieve a stored answer - it generates one, built from patterns it learned during training, similar to how you might answer "why did Katappa kill Bahubali?" from memory of watching the movie: you would give your own retelling, not a word-for-word transcript. That is the core distinction: Google retrieves, ChatGPT generates.',
+          'One practical consequence: Google can honestly say "I don\'t have this," because it is just searching an index. A raw language model is far less likely to say that - it is built to produce a plausible-sounding answer whether or not one truly exists, and by default you get no source to check.',
+        ],
+        visual: 'search-vs-generation',
+      },
+      {
+        heading: 'How LLMs Actually Generate Words',
+        body: [
+          'LLMs work by predicting and generating, one likely word at a time. Give it "The sun rises in..." and it predicts "the east" because that pattern showed up constantly in training. Give it "Roses are ___" and "red" or "beautiful" surface as high-probability completions.',
+          'It is autocomplete, just a dramatically smarter version - the model is constantly estimating which next word is statistically most likely to fit, based on everything (languages, grammar, reasoning patterns, stories, and associations between places, events, and ideas) it absorbed during training.',
+        ],
+      },
+      {
+        heading: 'What Knowledge Does an LLM Actually Contain?',
+        body: [
+          'An LLM is a neural network holding an enormous collection of numbers called parameters (or weights), shaped by scraping and reading vast amounts of internet text. Those weights encode patterns, not stored facts in the way a database stores rows - ask about "rose" and words like "beautiful," "red," or "fragrant" surface because of learned probability, not lookup.',
+          'That training is not a daily or even weekly event - it is expensive enough that every model ships with a fixed knowledge cutoff date, documented by whoever built it. That naturally raises a question worth sitting with: if training stopped on a fixed date, how does a model seem to know about recent events at all? (Short answer: context and tools, not raw memory - something worth exploring in more depth later.)',
+        ],
+      },
+      {
+        heading: 'Base Model vs Instruction-Tuned Assistant',
+        body: [
+          'A base model is the raw, unfiltered core of an LLM: it has read a massive amount of text and its only actual job is to guess the next token. Think of it as an extremely advanced autocomplete engine - not yet shaped into a helpful, safe chat assistant.',
+          'What you actually use - ChatGPT, Claude, Gemini, Grok - is a base model with several layers built on top: tool access, human feedback (RLHF), security and auth, web search, guardrails, content filters, system instructions, and conversation management. Companies rarely expose the raw base model directly, precisely because it has no built-in filters and will attempt to answer anything. A simple way to hold the idea: the base model is the engine, and the assistant you chat with is the whole car built around it.',
+          'Every major lab ships its own base models under different names: OpenAI (GPT-5, GPT-4o, o1, o3), Anthropic (Claude 4, Claude Sonnet 4.6, Opus), Google (Gemini 3, Gemini 2.5 Pro, and the open-weight Gemma 3), Meta (Llama 4, Llama 3.1, open-weight), DeepSeek (DeepSeek-R1, DeepSeek-V4, open-weight), xAI (Grok 3, Grok 4.3), Alibaba (Qwen 3.5, Qwen 3), and Amazon (the Nova family).',
+        ],
+        visual: 'base-model-stack',
+      },
+      {
+        heading: 'Training vs Inference',
+        body: [
+          'Training is the school phase - the model studies an enormous amount of data to learn rules and patterns, and it is slow and expensive. Inference is the working phase - using everything it already learned to answer a real prompt, right now. Every time you send a message to an LLM, you are triggering inference, not training.',
+        ],
+        visual: 'training-vs-inference',
+      },
+      {
+        heading: 'Why Models Sound So Confident: Hallucination',
+        body: [
+          'Fake fluency is not the same thing as truthfulness. An LLM can state something confidently and still be completely wrong - that gap is called hallucination: the model presenting made-up information as a hard fact. It is not lying on purpose; it is guessing the next plausible word, and that guess can come out sounding extremely sure of itself even when it is wrong.',
+          'Hallucination tends to show up because of insufficient knowledge, ambiguous phrasing, data that simply is not new enough, false assumptions baked into the prompt, unreliable patterns in training, or the model simply being optimized to always produce an answer rather than admit uncertainty - which is how you get confidently wrong answers instead of a shrug.',
+          'This is also why base models are noticeably worse at things like precise math than an instruction-tuned assistant built on top of them - and why it genuinely matters that an assistant is sometimes willing to say "I don\'t have reliable information about this" instead of inventing something plausible-sounding.',
+        ],
+      },
+      {
+        heading: 'Confidence Isn\'t Proof',
+        body: [
+          'Humans often treat a confident tone as evidence on its own - if someone states something firmly enough, we tend to assume they must be right. LLMs can fall into the same trap with themselves: if the model feels very sure about an answer, it can treat that internal certainty as if it were proof, even though certainty and correctness are two completely different things.',
+          'You can push back on this directly: ask for a source, ask it to only answer if it is actually confident, or explicitly ask what it is uncertain about. None of that guarantees a correct answer, but it does surface overconfidence. Grounding the model with real, current information - like allowing it to search the web - gives it external evidence to check itself against, instead of relying purely on its own internal confidence.',
+        ],
+      },
+      {
+        heading: 'Tools: Giving the Model Superpowers',
+        body: [
+          'On its own, a language model cannot see your files, your calendar, your email, your location, or your database - it only has whatever was in its training data and whatever you type into the prompt. Tools close that gap: calling an API, running code, checking the weather, querying a database, reading internal documents, and more.',
+          'Combine web search with an LLM and you get something meaningfully more useful: retrieval supplies real, current, external evidence, and generation turns that evidence into a clear, natural-language answer. That combination has a name - RAG, Retrieval-Augmented Generation - and it is one of the most practically important patterns in real-world AI applications.',
+        ],
+      },
+      {
+        heading: 'Does the Model Know Itself?',
+        body: [
+          'An LLM can usually tell you things like how many parameters it has, its knowledge cutoff date, who built it, and where it is deployed - that is documented, factual information it was trained to be able to state. That is not the same as full self-awareness, though.',
+          'Whatever an LLM tells you ultimately comes from one of four sources: its training data (what it learned before the cutoff), the context of the current conversation, its system prompt (instructions about how it should behave), or the tools it has been given access to. Those four sources are exactly what separate a bare base model from a genuinely useful, instruction-tuned assistant.',
+        ],
+      },
+    ],
+    quiz: [
+      {
+        question: 'What is the core difference between how Google Search and ChatGPT produce an answer?',
+        options: [
+          'Google is faster, ChatGPT is slower',
+          'Google retrieves existing documents from an index; ChatGPT generates new text from learned patterns',
+          'They both search the live internet in real time',
+          'ChatGPT only works offline',
+        ],
+        correctIndex: 1,
+      },
+      {
+        question: 'What is a "base model"?',
+        options: [
+          'A fully safety-filtered chat assistant',
+          'The raw, unfiltered model whose only job is to predict the next word',
+          'A search engine index',
+          'A tool used only for image generation',
+        ],
+        correctIndex: 1,
+      },
+      {
+        question: 'What does "hallucination" mean in the context of an LLM?',
+        options: [
+          'The model refuses to answer',
+          'The model presents made-up information confidently, as if it were a verified fact',
+          'The model crashes and stops responding',
+          'The model only works with images',
+        ],
+        correctIndex: 1,
+      },
+      {
+        question: 'What does RAG (Retrieval-Augmented Generation) combine?',
+        options: [
+          'Two different language models',
+          'Training and inference',
+          'Real-time retrieval (like web search) with an LLM\'s generation ability',
+          'Base models from two companies',
+        ],
+        correctIndex: 2,
       },
     ],
   },

@@ -4,7 +4,6 @@ import { ArrowLeft, ArrowRight, Clock } from 'lucide-react';
 
 import SplitHeading from '../../../components/anim/SplitHeading';
 import FadeIn from '../../../components/anim/FadeIn';
-import PracticeTerminal from '../../../components/practice/PracticeTerminal';
 import Quiz from '../../../components/practice/Quiz';
 import { aiTopics } from './aiTopics';
 import type { TopicSection } from './aiTopics';
@@ -15,12 +14,18 @@ import TuringTestDiagram from '../../../components/ai/TuringTestDiagram';
 import SiVsAiTable from '../../../components/ai/SiVsAiTable';
 import MlVsDlTable from '../../../components/ai/MlVsDlTable';
 import AttentionDiagram from '../../../components/ai/AttentionDiagram';
+import SearchVsGenerationDiagram from '../../../components/ai/SearchVsGenerationDiagram';
+import BaseModelStackDiagram from '../../../components/ai/BaseModelStackDiagram';
+import TrainingVsInferenceDiagram from '../../../components/ai/TrainingVsInferenceDiagram';
 
 const VISUALS: Record<NonNullable<TopicSection['visual']>, React.ComponentType> = {
   'turing-test': TuringTestDiagram,
   'si-vs-ai': SiVsAiTable,
   'ml-vs-dl': MlVsDlTable,
   attention: AttentionDiagram,
+  'search-vs-generation': SearchVsGenerationDiagram,
+  'base-model-stack': BaseModelStackDiagram,
+  'training-vs-inference': TrainingVsInferenceDiagram,
 };
 
 const AiTopicPage: React.FC = () => {
@@ -115,12 +120,6 @@ const AiTopicPage: React.FC = () => {
                   </div>
                 );
               })()}
-            {sec.example && (
-              <div className="mt-4">
-                <p className="text-fg/40 text-xs uppercase tracking-wide mb-2">{sec.example.caption ?? 'Try it yourself'}</p>
-                <PracticeTerminal starterCode={sec.example.starterCode} height="180px" />
-              </div>
-            )}
           </div>
         ))}
       </FadeIn>
