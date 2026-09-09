@@ -47,6 +47,9 @@ const CSS_TOPIC_SLUGS = [
   'variables-best-practices',
 ];
 
+// Keep in sync with src/pages/courses/ai/aiTopics.ts.
+const AI_TOPIC_SLUGS = ['evolution-of-ai'];
+
 const staticRoutes = [
   { path: '/', priority: '1.0', changefreq: 'monthly' },
   { path: '/services', priority: '0.9', changefreq: 'monthly' },
@@ -73,7 +76,13 @@ const cssTopicRoutes = CSS_TOPIC_SLUGS.map((slug) => ({
   changefreq: 'yearly',
 }));
 
-const allRoutes = [...staticRoutes, ...serviceRoutes, ...topicRoutes, ...cssTopicRoutes];
+const aiTopicRoutes = AI_TOPIC_SLUGS.map((slug) => ({
+  path: `/interview-prep/ai/${slug}`,
+  priority: '0.7',
+  changefreq: 'yearly',
+}));
+
+const allRoutes = [...staticRoutes, ...serviceRoutes, ...topicRoutes, ...cssTopicRoutes, ...aiTopicRoutes];
 
 const urlEntries = allRoutes
   .map(

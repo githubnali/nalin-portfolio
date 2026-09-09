@@ -1,7 +1,7 @@
 export interface EstimatableTopic {
   intro: string;
   sections: { heading: string; body: string[]; example?: unknown }[];
-  challenge: { prompt: string };
+  challenge?: { prompt: string };
   quiz: unknown[];
 }
 
@@ -26,13 +26,13 @@ export function estimateTopicMinutes(topic: EstimatableTopic): number {
     if (section.example) exampleCount += 1;
   }
 
-  words += wordCount(topic.challenge.prompt);
+  if (topic.challenge) words += wordCount(topic.challenge.prompt);
 
   const readingMinutes = words / WORDS_PER_MINUTE;
   const exampleMinutes = exampleCount * MINUTES_PER_EXAMPLE;
   const quizMinutes = topic.quiz.length * MINUTES_PER_QUIZ_QUESTION;
 
-  const total = readingMinutes + exampleMinutes + quizMinutes + MINUTES_PER_CHALLENGE;
+  const total = readingMinutes + exampleMinutes + quizMinutes + (topic.challenge ? MINUTES_PER_CHALLENGE : 0);
 
   return Math.max(MIN_MINUTES, Math.round(total));
 }

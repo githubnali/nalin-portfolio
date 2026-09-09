@@ -13,6 +13,8 @@ import HtmlInterviewQuestionsPage from './pages/courses/html/HtmlInterviewQuesti
 import CssCourseLayout from './pages/courses/css/CssCourseLayout';
 import CssTopicPage from './pages/courses/css/CssTopicPage';
 import CssInterviewQuestionsPage from './pages/courses/css/CssInterviewQuestionsPage';
+import AiCourseLayout from './pages/courses/ai/AiCourseLayout';
+import AiTopicPage from './pages/courses/ai/AiTopicPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
@@ -37,6 +39,10 @@ function App() {
                 <Route index element={<Navigate to="introduction" replace />} />
                 <Route path="interview-questions" element={<CssInterviewQuestionsPage />} />
                 <Route path=":topicSlug" element={<CssTopicPage />} />
+              </Route>
+              <Route path="/interview-prep/ai" element={<AiCourseLayout />}>
+                <Route index element={<Navigate to="evolution-of-ai" replace />} />
+                <Route path=":topicSlug" element={<AiTopicPage />} />
               </Route>
               <Route path="*" element={<NotFoundPage />} />
             </Routes>

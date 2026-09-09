@@ -26,7 +26,12 @@ interface Topic {
 const topics: Topic[] = [
   { name: 'DSA', focus: 'Arrays, trees, graphs & complexity', Icon: Binary },
   { name: 'Frontend System Design', focus: 'Scalable, component-driven UI architecture', Icon: LayoutTemplate },
-  { name: 'Artificial Intelligence', focus: 'LLMs, prompting & AI-assisted tooling', Icon: BrainCircuit },
+  {
+    name: 'Artificial Intelligence',
+    focus: 'LLMs, prompting & AI-assisted tooling',
+    Icon: BrainCircuit,
+    path: '/interview-prep/ai',
+  },
   { name: 'React', focus: 'Hooks, patterns & performance', icon: Reactjs },
   { name: 'JavaScript', focus: 'Core concepts, closures & async', icon: JS },
   { name: 'TypeScript', focus: 'Types, generics & type-safe patterns', icon: TypeScript },
