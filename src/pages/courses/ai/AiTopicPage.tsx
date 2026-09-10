@@ -17,6 +17,13 @@ import AttentionDiagram from '../../../components/ai/AttentionDiagram';
 import SearchVsGenerationDiagram from '../../../components/ai/SearchVsGenerationDiagram';
 import BaseModelStackDiagram from '../../../components/ai/BaseModelStackDiagram';
 import TrainingVsInferenceDiagram from '../../../components/ai/TrainingVsInferenceDiagram';
+import TokenizationFlowDiagram from '../../../components/ai/TokenizationFlowDiagram';
+import ContextWindowDiagram from '../../../components/ai/ContextWindowDiagram';
+import TimelineDiagram from '../../../components/ai/TimelineDiagram';
+import RuleBasedFlowDiagram from '../../../components/ai/RuleBasedFlowDiagram';
+import WordAmbiguityDiagram from '../../../components/ai/WordAmbiguityDiagram';
+import HallucinationDiagram from '../../../components/ai/HallucinationDiagram';
+import RagFlowDiagram from '../../../components/ai/RagFlowDiagram';
 
 const VISUALS: Record<NonNullable<TopicSection['visual']>, React.ComponentType> = {
   'turing-test': TuringTestDiagram,
@@ -26,6 +33,13 @@ const VISUALS: Record<NonNullable<TopicSection['visual']>, React.ComponentType> 
   'search-vs-generation': SearchVsGenerationDiagram,
   'base-model-stack': BaseModelStackDiagram,
   'training-vs-inference': TrainingVsInferenceDiagram,
+  'tokenization-flow': TokenizationFlowDiagram,
+  'context-window': ContextWindowDiagram,
+  timeline: TimelineDiagram,
+  'rule-based-flow': RuleBasedFlowDiagram,
+  'word-ambiguity': WordAmbiguityDiagram,
+  hallucination: HallucinationDiagram,
+  'rag-flow': RagFlowDiagram,
 };
 
 const AiTopicPage: React.FC = () => {

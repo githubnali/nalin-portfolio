@@ -11,7 +11,14 @@ export interface TopicSection {
     | 'attention'
     | 'search-vs-generation'
     | 'base-model-stack'
-    | 'training-vs-inference';
+    | 'training-vs-inference'
+    | 'tokenization-flow'
+    | 'context-window'
+    | 'timeline'
+    | 'rule-based-flow'
+    | 'word-ambiguity'
+    | 'hallucination'
+    | 'rag-flow';
 }
 
 export interface AiTopic {
@@ -62,6 +69,7 @@ export const aiTopics: AiTopic[] = [
           'The problem: rules do not scale. Anyone can phrase the same idea a slightly different way, and a purely rule-based system breaks. It is simply not possible to write a condition for every case - one of the reasons the field cooled off during the AI winter mentioned above.',
           'One famous milestone from this rule-based era: in 1997, IBM\'s Deep Blue defeated world chess champion Garry Kasparov. Despite the headlines, Deep Blue was not really "intelligent" in the modern sense - it was a system built on permutations and combinations, evaluating possible chess moves rather than learning from experience.',
         ],
+        visual: 'rule-based-flow',
       },
       {
         heading: 'The Rise of Machine Learning',
@@ -92,6 +100,7 @@ export const aiTopics: AiTopic[] = [
           'Text turned out to be deceptively hard for machines, precisely because language is so ambiguous. Take the sentence "I saw a man with a telescope" - did I use the telescope to see him, or does he own the telescope? Or take a single word like "bank": a river bank and the Bank of India share a word but mean something completely different. Humans resolve this from context instantly; machines had to be painstakingly trained to do the same.',
           'Techniques like Bag of Words, n-grams, RNNs (Recurrent Neural Networks), and LSTMs (Long Short-Term Memory networks) were the tools of this era. RNNs were the first real breakthrough at helping machines understand longer sentences, and LSTMs pushed that further to roughly page-length text - but connecting ideas across hundreds of pages was still out of reach.',
         ],
+        visual: 'word-ambiguity',
       },
       {
         heading: 'Transformers: "Attention Is All You Need" (2017)',
@@ -126,6 +135,7 @@ export const aiTopics: AiTopic[] = [
         body: [
           '1950 - Alan Turing proposes the Turing Test. 1956 - John McCarthy coins the term "Artificial Intelligence". 1950s-1980s - Rule-Based AI and Expert Systems. 1997 - Deep Blue defeats Garry Kasparov. 1990s - Machine Learning gains traction. 2000s - Deep Learning breakthroughs. 2012 - AlexNet wins on ImageNet. 2016 - AlphaGo defeats Lee Sedol. 2017 - Transformers ("Attention Is All You Need"). 2022 - ChatGPT is released. 2025+ - Agentic AI.',
         ],
+        visual: 'timeline',
       },
     ],
     quiz: [
@@ -237,6 +247,7 @@ export const aiTopics: AiTopic[] = [
           'Hallucination tends to show up because of insufficient knowledge, ambiguous phrasing, data that simply is not new enough, false assumptions baked into the prompt, unreliable patterns in training, or the model simply being optimized to always produce an answer rather than admit uncertainty - which is how you get confidently wrong answers instead of a shrug.',
           'This is also why base models are noticeably worse at things like precise math than an instruction-tuned assistant built on top of them - and why it genuinely matters that an assistant is sometimes willing to say "I don\'t have reliable information about this" instead of inventing something plausible-sounding.',
         ],
+        visual: 'hallucination',
       },
       {
         heading: 'Confidence Isn\'t Proof',
@@ -251,6 +262,7 @@ export const aiTopics: AiTopic[] = [
           'On its own, a language model cannot see your files, your calendar, your email, your location, or your database - it only has whatever was in its training data and whatever you type into the prompt. Tools close that gap: calling an API, running code, checking the weather, querying a database, reading internal documents, and more.',
           'Combine web search with an LLM and you get something meaningfully more useful: retrieval supplies real, current, external evidence, and generation turns that evidence into a clear, natural-language answer. That combination has a name - RAG, Retrieval-Augmented Generation - and it is one of the most practically important patterns in real-world AI applications.',
         ],
+        visual: 'rag-flow',
       },
       {
         heading: 'Does the Model Know Itself?',
@@ -298,6 +310,129 @@ export const aiTopics: AiTopic[] = [
           'Training and inference',
           'Real-time retrieval (like web search) with an LLM\'s generation ability',
           'Base models from two companies',
+        ],
+        correctIndex: 2,
+      },
+    ],
+  },
+  {
+    slug: 'secret-language-of-llms',
+    title: 'The Secret Language of LLMs',
+    intro:
+      'An LLM responds fluently in English, Hindi, code, even emojis - but it does not understand words the way we do. What does it actually see, and how does that shape everything from cost to memory?',
+    sections: [
+      {
+        heading: 'Computers Don\'t Understand Words - They Understand Numbers',
+        body: [
+          'Programming languages like C and C++ exist because computers cannot understand plain English directly. The same is true for LLMs: a sentence like "These notes are awesome" cannot be handed to a model as-is. What an LLM understands is numbers.',
+          'The sentence first gets broken into pieces - These, notes, are, awesome - and each piece is converted into a number, producing an array like [78, 12, 23, 433] that is what actually gets passed to the model.',
+        ],
+      },
+      {
+        heading: 'Tokens, Token IDs, and Tokenizers',
+        body: [
+          'When a sentence is broken into words or word-pieces, each piece is called a token, and the number assigned to a token is its token ID. The sequence of token IDs is what the LLM actually reads and processes.',
+          'This also flips how prediction works: an LLM is not really predicting the next word directly - it is predicting the next token ID, which is then mapped back to a token for you to read. The tool that does this splitting is called a tokenizer, and there are multiple tokenizer types in use across the industry, chosen per model and per task - this is a core part of both training and inference.',
+          'One word is not guaranteed to become exactly one token. "Awesome" might stay as one token, or it might split into two, like "awe" + "some" - it depends entirely on the tokenizer\'s vocabulary.',
+        ],
+        visual: 'tokenization-flow',
+      },
+      {
+        heading: 'Subword Tokenization',
+        body: [
+          'You can see this live on tools like the OpenAI tokenizer or tiktokenizer. Feed in a word like "untrustable" and it may split into three tokens - "un", "trust", "able" - because those pieces are common and reusable across many other words. This is subword tokenization: breaking uncommon or longer words into smaller, reusable chunks instead of storing every possible word as its own token.',
+          'Confusingly, this is not always predictable from meaning or grammar. A word like "undone" might stay as a single token even though "un" + "done" seems like the obvious split - simply because "undone" already exists as one entry in that tokenizer\'s vocabulary. The same word can be split completely differently by a different tokenizer. Tokenization follows the vocabulary the tokenizer was trained on, not the grammatical structure of a word.',
+        ],
+      },
+      {
+        heading: 'Vocabulary: The Fixed List Behind Every Token ID',
+        body: [
+          'A tokenizer\'s vocabulary is the fixed list of every unique word, subword, or character it recognizes and can convert into a number. Every token ID comes from a lookup against this vocabulary mapping.',
+          'Different companies use different tokenizer families entirely: OpenAI models use variants of Byte Pair Encoding (BPE), categorized by vocabulary size, while Meta\'s Llama models use SentencePiece-BPE. A larger, better-trained vocabulary generally makes tokenization more efficient - which matters a lot once you start thinking about cost and multilingual support.',
+        ],
+      },
+      {
+        heading: 'Byte Pair Encoding (BPE)',
+        body: [
+          'BPE is the tokenizer family behind OpenAI\'s models. The idea: a word like "low" might get its own token ID, and that same token can be reused as part of "lower" and "lowest". The same pattern applies to prefixes like "un" showing up across "unbreakable", "untrustable", "unmanageable", and more.',
+          'Since every token can ultimately be represented as bytes (combinations of 0s and 1s), a BPE tokenizer starts from small byte-level units and learns which neighboring pairs occur together often enough to be worth merging into a single new token - growing the vocabulary over time. Other tokenizer families like WordPiece and Unigram take a similar spirit but with different merging rules; the common goal across all of them is a vocabulary that makes tokenization efficient.',
+        ],
+      },
+      {
+        heading: 'English vs Other Languages',
+        body: [
+          'Tokenization is purely about text patterns - there is no meaning or emotion baked in, so different languages routinely produce very different token counts for what is functionally the same sentence. Writing something in Hinglish (mixed Hindi-English, like "Mai Artificial Intelligence seekh raha hu") does not tokenize the same way as writing the equivalent pure-English sentence, even though the meaning is identical to a human reader.',
+          'In practice, English tends to be the most token-efficient language for most current tokenizers, while languages like Hindi or mixed Hinglish can cost noticeably more tokens for the same idea. Vocabulary size and training coverage are the main levers that determine how efficiently a model handles a given language - newer tokenizer versions have gotten meaningfully better at this than older ones.',
+        ],
+      },
+      {
+        heading: 'Tokenization Fertility',
+        body: [
+          'Tokenization fertility is the average number of tokens an AI produces per word. Lower fertility means fewer tokens per word - faster, cheaper, and able to fit more text into a single context window. Higher fertility means a word gets chopped into many tiny fragments, which increases cost and fills up the context window faster - something that shows up disproportionately in some non-English languages.',
+          'Emojis, code, special characters, capitalization, and even plain spaces all affect tokenization too - adding or removing a single space, or changing a dash, can change the token count. Every distinct text pattern maps to its own token ID.',
+        ],
+      },
+      {
+        heading: 'System Instructions vs User Instructions',
+        body: [
+          'Beyond the words you type, models also work with special tokens tied to system instructions - a kind of hidden rulebook that tells the AI how to behave, separate from what you actually ask. A user instruction, by contrast, is simply the specific question or task you type in.',
+          'How exactly system and user prompts get combined and passed to the model differs from one LLM and company to another.',
+        ],
+      },
+      {
+        heading: 'The Context Window',
+        body: [
+          'A context window is the amount of tokenized information a model can process within a single request or generation - in plain terms, the short-term working memory of an AI: the maximum text it can "see" and remember at any one moment.',
+          'That window is shared between everything you send and everything the model generates in return - and crucially, it includes far more than just your typed message: system instructions, attached documents, prior text, and tool outputs all count against the same limit.',
+          'When a context window threatens to overflow, the practical fixes are to truncate input, summarize earlier messages instead of replaying everything, and split unrelated work across separate chats rather than cramming every task into one long conversation. It is also worth remembering that a model does not perfectly remember an old conversation forever - it works from a summary of it, and only while that context stays live.',
+        ],
+        visual: 'context-window',
+      },
+      {
+        heading: 'Common Misconceptions About Tokens',
+        body: [
+          'A short list worth keeping in mind: one token is not always one word. Not every company or model uses the same tokenizer. A token ID does not represent meaning on its own. A single visible emoji is not guaranteed to be one token. A larger vocabulary is not automatically better. A larger context window does not guarantee perfect memory. And more tokens in a prompt do not automatically produce a better result - a longer prompt is not the same thing as a better prompt, and every extra token has a real, direct effect on API cost.',
+        ],
+      },
+    ],
+    quiz: [
+      {
+        question: 'What does an LLM actually receive as input, underneath the words you type?',
+        options: [
+          'The raw English sentence, unchanged',
+          'An array of numbers (token IDs) produced by a tokenizer',
+          'An audio waveform',
+          'A list of matching web pages',
+        ],
+        correctIndex: 1,
+      },
+      {
+        question: 'Why can the same word be tokenized differently by two different tokenizers?',
+        options: [
+          'Tokenization is random and changes every time',
+          'It depends on that tokenizer\'s specific vocabulary and how it was trained, not on grammar or meaning',
+          'Only English words can be tokenized consistently',
+          'Every tokenizer always splits words into exactly two pieces',
+        ],
+        correctIndex: 1,
+      },
+      {
+        question: 'What is "tokenization fertility"?',
+        options: [
+          'How many parameters a model has',
+          'The average number of tokens produced per word - lower is cheaper and faster, higher costs more',
+          'The number of languages a tokenizer supports',
+          'How quickly a model was trained',
+        ],
+        correctIndex: 1,
+      },
+      {
+        question: 'What does a model\'s context window actually include?',
+        options: [
+          'Only the exact words you type in your current message',
+          'Only the model\'s own past replies',
+          'Everything sharing that request: system instructions, documents, tool outputs, and the conversation text, both in and out',
+          'A permanent, unlimited record of every past conversation',
         ],
         correctIndex: 2,
       },

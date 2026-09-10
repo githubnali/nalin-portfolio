@@ -48,7 +48,7 @@ const CSS_TOPIC_SLUGS = [
 ];
 
 // Keep in sync with src/pages/courses/ai/aiTopics.ts.
-const AI_TOPIC_SLUGS = ['evolution-of-ai', 'chatgpt-know-or-guess'];
+const AI_TOPIC_SLUGS = ['evolution-of-ai', 'chatgpt-know-or-guess', 'secret-language-of-llms'];
 
 const staticRoutes = [
   { path: '/', priority: '1.0', changefreq: 'monthly' },
